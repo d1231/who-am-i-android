@@ -13,18 +13,21 @@
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
     </style>
 
-    <style name="letterStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="letterStyle" parent="Widget.AppCompat.Button">
         <item name="android:textStyle">bold</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">4dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:paddingEnd">6dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:gravity">center</item>
+        <item name="android:theme">@style/letterTheme</item>
+    </style>
+
+    <style name="letterTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorButtonNormal">@android:color/white</item>
     </style>
 
     <style name="teamhistory_header">

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/question_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/screen_question">
+
+    <TextView
+        android:id="@+id/question_menu"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:background="#1A9FCC"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="@string/question_bar_menu"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/question_clue"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#1C76CC"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="@string/question_bar_clue"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/question_clue_num"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#1C76CC"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="6dp"
+        android:textColor="@android:color/white"
+        tools:text="5"/>
+
+    <TextView
+        android:id="@+id/question_total_score"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:background="#1A9FCC"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="6dp"
+        android:textColor="@android:color/white"
+        tools:text="350"/>
+
+
+</LinearLayout>
+
+    

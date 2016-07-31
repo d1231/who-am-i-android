@@ -4,8 +4,11 @@ import com.danny.projectt.model.PlayerRepository;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.navigator.GameNavigator;
 import com.danny.projectt.utils.RxUtils;
+import com.google.common.collect.Lists;
 
-import rx.android.schedulers.AndroidSchedulers;
+import java.util.List;
+
+import rx.Subscription;
 
 public class GameController {
 
@@ -14,6 +17,8 @@ public class GameController {
     private final GameNavigator gameNavigator;
 
     private final PlayerRepository playerRepository;
+
+    private final List<Subscription> subscriptions = Lists.newArrayList();
 
     public GameController(PlayerRepository playerRepository, GameNavigator gameNavigator) {
 
@@ -29,8 +34,11 @@ public class GameController {
 
     private void startNextQuestion() {
 
-        playerRepository.getPlayer()
-                        .subscribe(this::displayQuestion, RxUtils::onError);
+        final Subscription subscription = playerRepository.getPlayer()
+                                                          .subscribe(this::displayQuestion, RxUtils::onError);
+
+        subscriptions.add(subscription);
+
     }
 
     private void displayQuestion(Player player) {
@@ -47,6 +55,12 @@ public class GameController {
     public void quitGame() {
 
         gameNavigator.quitGame();
+
+    }
+
+    public void finishGame() {
+
+        RxUtils.safeUnsubscribe(subscriptions);
 
     }
 }

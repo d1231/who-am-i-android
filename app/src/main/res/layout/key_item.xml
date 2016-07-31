@@ -2,15 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_margin="5dp"
-             android:background="@drawable/key"
-             android:clickable="true"
-             android:orientation="vertical">
+             android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/letter"
         style="@style/letterStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:text="T"/>
 
 </FrameLayout>

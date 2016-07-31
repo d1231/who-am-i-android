@@ -65,23 +65,24 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     @BindView(R.id.question_total_score)
     TextView totalScoreTv;
 
+    @BindView(R.id.question_clue)
+    View clueView;
+
+    @BindView(R.id.question_menu)
+    View menuView;
+
     @BindView(R.id.question_clue_num)
     TextView clueNumTextView;
 
     @BindView(R.id.question_score)
     TextSwitcher scoreTextSwitcher;
 
-    @BindView(R.id.question_clue)
-    View clueView;
 
     @BindView(R.id.question_continue)
     View nextView;
 
     @BindView(R.id.question_skip)
     View skipView;
-
-    @BindView(R.id.question_menu)
-    View menuView;
 
     @Inject
     QuestionPresenter presenter;

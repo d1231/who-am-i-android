@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.danny.projectt.FragmentTransitionManager;
 import com.danny.projectt.GameController;
-import com.danny.projectt.navigator.GameNavigator;
 import com.danny.projectt.MyApplication;
 import com.danny.projectt.R;
 import com.danny.projectt.dagger.application.ApplicationComponent;
@@ -16,6 +15,7 @@ import com.danny.projectt.dagger.game.GameComponent;
 import com.danny.projectt.dagger.game.GameModule;
 import com.danny.projectt.fragments.QuestionFragment;
 import com.danny.projectt.model.objects.Player;
+import com.danny.projectt.navigator.GameNavigator;
 
 import javax.inject.Inject;
 
@@ -76,6 +76,9 @@ public class GameActivity extends AppCompatActivity implements GameNavigator {
     protected void onDestroy() {
 
         super.onDestroy();
+
+        gameController.finishGame();
+        fragmentTransitionManager.dropActivity();
 
         MyApplication.get(this).setGameComponent(null);
     }
