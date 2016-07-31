@@ -1,0 +1,12 @@
+<resources>
+
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference"/>
+        <attr name="metaButtonBarButtonStyle" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="Key">
+        <attr name="keyBackground" format="color"/>
+    </declare-styleable>
+
+</resources>

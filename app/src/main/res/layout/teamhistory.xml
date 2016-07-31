@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:padding="5dp"
+              tools:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/team_history_years"
+        style="@style/teamhistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:maxLines="1"
+        tools:text="2000-2003"/>
+
+    <TextView
+        android:id="@+id/team_history_name"
+        style="@style/teamhistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        tools:text="Chelsea"/>
+
+    <TextView
+        android:id="@+id/team_history_apps"
+        style="@style/teamhistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        tools:text="500"/>
+
+    <TextView
+        android:id="@+id/team_history_goals"
+        style="@style/teamhistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        tools:text="500"/>
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Who Am I? - Football edition</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="question_bar_menu">Menu</string>
+    <string name="question_bar_clue">Clue</string>
+    <string name="question_continue">Continue</string>
+    <string name="question_skip">Give up!</string>
+
+    <string name="dialog_skip_title">Skip question</string>
+    <string name="dialog_skip_msg">Are you sure you want to give up and procceed to next question?</string>
+    <string name="dialog_skip_pos">Give up</string>
+    <string name="dialog_skip_neg">Try again</string>
+    <string name="teamhistory_header_years">Years</string>
+    <string name="teamhistory_header_team">Team</string>
+    <string name="teamhistory_header_apps_goals">Apps (Goals)</string>
+    <string name="teamhistory_header_goals">Goals</string>
+    <string name="teamhistory_header_apps">Apps</string>
+</resources>

@@ -1,0 +1,4 @@
+ext {
+    jdk_path = "/usr/lib/jvm/java-8-oracle/"
+    oldJdk_path = System.getenv("JAVA7_HOME")
+}

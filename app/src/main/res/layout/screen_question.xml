@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2E4B91">
+
+    <LinearLayout
+        android:id="@+id/question_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/question_menu"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="#1A9FCC"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="@string/question_bar_menu"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/question_clue"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#1C76CC"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="@string/question_bar_clue"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/question_clue_num"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#1C76CC"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textColor="@android:color/white"
+            tools:text="5"/>
+
+        <TextView
+            android:id="@+id/question_total_score"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="#1A9FCC"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textColor="@android:color/white"
+            tools:text="350"/>
+
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/team_history_header"
+        layout="@layout/teamhistory_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/question_bar"
+        android:layout_marginLeft="@dimen/team_history_margin_sides"
+        android:layout_marginRight="@dimen/team_history_margin_sides"
+        android:layout_marginTop="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/question_teamhistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/question_continue"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/team_history_header"
+        android:layout_marginLeft="@dimen/team_history_margin_sides"
+        android:layout_marginRight="@dimen/team_history_margin_sides"
+        tools:listitem="@layout/teamhistory"/>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/question_continue"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/question_answer"
+        android:layout_centerHorizontal="true"
+        android:text="@string/question_continue"
+        android:visibility="invisible"
+        app:backgroundTint="@android:color/white"
+        tools:visibility="invisible"/>
+
+    <TextSwitcher
+        android:id="@+id/question_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/question_answer"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:visibility="visible"
+        tools:visibility="visible"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/question_skip"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/question_answer"
+        android:layout_centerHorizontal="true"
+        android:text="@string/question_skip"
+        android:visibility="visible"
+        app:backgroundTint="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/question_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/question_letters"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/guess_holder"
+        android:padding="10dp"
+        android:textColor="#2E4B91"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="****K L******"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/question_letters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        tools:listitem="@layout/key_item"/>
+
+</RelativeLayout>
