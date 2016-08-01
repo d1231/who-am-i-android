@@ -14,7 +14,6 @@ import com.danny.projectt.views.QuestionView;
 import javax.inject.Inject;
 
 import rx.Subscription;
-import timber.log.Timber;
 
 public class QuestionPresenter extends BasePresenter<QuestionView> {
 
@@ -101,7 +100,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
                                                if (dialogResult == DialogResult.POSITIVE_CLICKED) {
                                                    scoreRepository.setSequence(0);
-                                                   gameController.finishQuestion();
+                                                   gameController.skipQuestion();
                                                }
 
                                            }, RxUtils::onError);
@@ -111,7 +110,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
     private void nextQuestion() {
 
-        gameController.finishQuestion();
+        gameController.finishQuestion(player);
     }
 
     private void goToMenu() {
@@ -124,6 +123,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
     @Override
     public void detachView() {
+
         super.detachView();
 
         view = null;
@@ -135,8 +135,9 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
         final int clues = clueRepository.getClues();
         if (clues > 0) {
-            questionManager.randomRevealing();
+            char letter = questionManager.randomRevealing();
             clueRepository.clueUsed();
+            view.correctGuess(Key.get(letter));
         }
 
     }

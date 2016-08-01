@@ -81,6 +81,8 @@ public class GameActivity extends AppCompatActivity implements GameNavigator {
         fragmentTransitionManager.dropActivity();
 
         MyApplication.get(this).setGameComponent(null);
+
+
     }
 
     @Override

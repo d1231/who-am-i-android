@@ -66,13 +66,10 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     TextView totalScoreTv;
 
     @BindView(R.id.question_clue)
-    View clueView;
+    TextView clueView;
 
     @BindView(R.id.question_menu)
     View menuView;
-
-    @BindView(R.id.question_clue_num)
-    TextView clueNumTextView;
 
     @BindView(R.id.question_score)
     TextSwitcher scoreTextSwitcher;
@@ -257,6 +254,9 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
         presenter.detachView();
 
         unbinder.unbind();
+
+        keyboardAdapter.setListener(null);
+
     }
 
     @Override
@@ -278,7 +278,7 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     @Override
     public void setNumberOfClues(int integer) {
 
-        clueNumTextView.setText(String.format("%d", integer));
+        clueView.setText(String.format("Clue (%d)", integer));
 
     }
 
@@ -356,7 +356,7 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     @Override
     public Observable<Void> clueClick() {
 
-        return Observable.merge(RxView.clicks(clueView), RxView.clicks(clueNumTextView));
+        return RxView.clicks(clueView);
     }
 
     @Override

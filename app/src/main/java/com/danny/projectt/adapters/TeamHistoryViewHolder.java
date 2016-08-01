@@ -37,7 +37,13 @@ public class TeamHistoryViewHolder extends RecyclerView.ViewHolder {
 
         teamHistoryYears.setText(String.format("%d-%d", teamHistory.startYear(), teamHistory.endYear()));
 
-        teamHistoryName.setText(teamHistory.teamName());
+        String s;
+        if (teamHistory.aLoan()) {
+            s = String.format("%s (Loan)", teamHistory.teamName());
+        } else {
+            s = teamHistory.teamName();
+        }
+        teamHistoryName.setText(s);
 
         final Stats leagueStats = teamHistory.leagueStats();
         teamHistoryApps.setText(String.format("%d", leagueStats.apps()));

@@ -11,6 +11,7 @@ import com.danny.projectt.dagger.application.DataModule;
 import com.danny.projectt.dagger.application.NetworkModule;
 import com.danny.projectt.dagger.game.GameComponent;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
@@ -21,9 +22,16 @@ public class MyApplication extends Application {
 
     private GameComponent gameComponent;
 
+    private RefWatcher refWatcher;
+
     public static MyApplication get(Context context) {
 
         return ((MyApplication) context.getApplicationContext());
+    }
+
+    public RefWatcher getRefWatcher() {
+
+        return refWatcher;
     }
 
     @Override
@@ -40,14 +48,17 @@ public class MyApplication extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
-        LeakCanary.install(this);
+        refWatcher = LeakCanary.install(this);
 
-        applicationComponent = DaggerApplicationComponent.builder()
-                                                         .dataModule(new DataModule())
-                                                         .networkModule(new NetworkModule())
-                                                         .applicationModule(new ApplicationModule(getApplicationContext()))
-                                                         .build();
+        applicationComponent = createComponent();
 
+    }
+
+    protected ApplicationComponent createComponent() {
+
+        return DaggerApplicationComponent.builder()
+                                         .applicationModule(new ApplicationModule(getApplicationContext()))
+                                         .build();
     }
 
     public ApplicationComponent getApplicationComponent() {

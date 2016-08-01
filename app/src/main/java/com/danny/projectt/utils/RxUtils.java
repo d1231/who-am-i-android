@@ -9,6 +9,8 @@ public class RxUtils {
 
     public static void onError(Throwable throwable) {
 
+        throwable.printStackTrace();
+
         Timber.e(throwable, "Error");
 
     }
@@ -22,6 +24,8 @@ public class RxUtils {
             }
 
         }
+
+        subscriptions.clear();
 
     }
 }

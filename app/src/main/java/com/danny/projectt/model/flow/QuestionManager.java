@@ -1,5 +1,6 @@
 package com.danny.projectt.model.flow;
 
+import com.danny.projectt.Key;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -88,7 +89,7 @@ public class QuestionManager {
 
     }
 
-    public void randomRevealing() {
+    public char randomRevealing() {
 
         if (letters.isEmpty()) {
             throw new IllegalStateException("No letters to reveal");
@@ -106,6 +107,7 @@ public class QuestionManager {
 
         publishResults(c);
 
+        return c;
     }
 
     private int reveal(char c) {

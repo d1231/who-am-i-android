@@ -9,6 +9,11 @@ import com.google.gson.TypeAdapter;
 @AutoValue
 public abstract class Stats implements Parcelable {
 
+    public static Stats create(int apps, int goals) {
+
+        return new AutoValue_Stats(apps, goals);
+    }
+
 
     public static TypeAdapter<Stats> typeAdapter(Gson gson) {
 

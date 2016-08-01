@@ -25,7 +25,7 @@ class KeyViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Key key) {
 
-        bind(key, null);
+        button.setText(key.name());
 
         button.setEnabled(false);
         button.setAlpha(0.7f);

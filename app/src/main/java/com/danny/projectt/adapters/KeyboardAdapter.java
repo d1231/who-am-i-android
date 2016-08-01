@@ -107,6 +107,11 @@ public class KeyboardAdapter extends RecyclerView.Adapter {
 
     }
 
+    public void setListener(KeyClickedListener listener) {
+
+        this.listener = listener;
+    }
+
     public interface KeyClickedListener {
 
         void onKeyClicked(Key key);

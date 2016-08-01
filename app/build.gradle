@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
+apply plugin: 'realm-android'
 apply from: '../deps.gradle'
 
 
@@ -28,6 +29,8 @@ android {
         versionName "0.0.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
 
     lintOptions {
@@ -48,11 +51,24 @@ android {
             signingConfig signingConfigs.config
         }
         debug {
-            buildConfigField "boolean", "REPORT_CRASHES", "false"
+            buildConfigField "boolean", "REPORT_CRASHES", "true"
             buildConfigField "String", "BACKEND_URL", $/"http://projectt-mydanny.rhcloud.com/"/$
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
             minifyEnabled false
+        }
+    }
+
+
+    productFlavors {
+
+        development {
+
+            minSdkVersion 21
+        }
+
+        production {
+
         }
     }
 
@@ -151,6 +167,8 @@ dependencies {
 
     compile 'com.google.guava:guava:19.0'
     compile 'org.apache.commons:commons-lang3:3.4'
+
+    compile 'com.android.support:multidex:1.0.1'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
         transitive = true

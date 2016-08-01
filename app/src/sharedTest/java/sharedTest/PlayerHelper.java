@@ -1,7 +1,8 @@
 package sharedTest;
 
-import com.danny.projectt.utils.AutoValueTypeAdapterFactory;
 import com.danny.projectt.model.objects.Player;
+import com.danny.projectt.utils.AutoValueTypeAdapterFactory;
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,5 +18,22 @@ public class PlayerHelper {
 
         return gson.fromJson(PLAYER, Player.class);
     }
+
+
+    public static Player createPlayer(String name) {
+
+        return createPlayer("50", name);
+    }
+
+    public static Player createPlayer(String id, String name) {
+
+        return Player.create(id, name, "Goalkeeper", "Spain", "10.8.94", Lists.newArrayList());
+    }
+
+    public static Player createPlayer(long id) {
+
+        return createPlayer(String.valueOf(id), "Def Name");
+    }
+
 
 }

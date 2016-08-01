@@ -52,7 +52,7 @@ public class GameControllerTest {
     @Test
     public void testFinishQuestion() throws Exception {
 
-        gameController.finishQuestion();
+        gameController.finishQuestion(null);
 
         verify(playerRepository, times(1)).getPlayer();
     }

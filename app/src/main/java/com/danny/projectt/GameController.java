@@ -12,8 +12,6 @@ import rx.Subscription;
 
 public class GameController {
 
-    private static final int BASE_SCORE = 50;
-
     private final GameNavigator gameNavigator;
 
     private final PlayerRepository playerRepository;
@@ -27,6 +25,8 @@ public class GameController {
     }
 
     public void startGame() {
+
+        playerRepository.start();
 
         startNextQuestion();
 
@@ -47,7 +47,14 @@ public class GameController {
 
     }
 
-    public void finishQuestion() {
+    public void skipQuestion() {
+
+        startNextQuestion();
+    }
+
+    public void finishQuestion(Player p) {
+
+        playerRepository.markFinished(p);
 
         startNextQuestion();
     }
@@ -60,6 +67,7 @@ public class GameController {
 
     public void finishGame() {
 
+        playerRepository.close();
         RxUtils.safeUnsubscribe(subscriptions);
 
     }

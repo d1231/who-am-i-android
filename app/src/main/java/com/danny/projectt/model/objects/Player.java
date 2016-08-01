@@ -12,15 +12,18 @@ import java.util.List;
 @AutoValue
 public abstract class Player implements Parcelable {
 
-    public static Player create(String name, String position, String placeOfBirth, String dateOfBirth, List<TeamHistory> teamHistory) {
+    public static Player create(String id, String name, String position, String placeOfBirth, String dateOfBirth, List<TeamHistory> teamHistory) {
 
-        return new AutoValue_Player(name, position, placeOfBirth, dateOfBirth, teamHistory);
+        return new AutoValue_Player(id, name, position, placeOfBirth, dateOfBirth, teamHistory);
     }
 
     public static TypeAdapter<Player> typeAdapter(Gson gson) {
 
         return new AutoValue_Player.GsonTypeAdapter(gson);
     }
+
+    @SerializedName("_id")
+    public abstract String id();
 
     public abstract String name();
 

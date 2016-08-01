@@ -10,6 +10,7 @@ import com.danny.projectt.R;
 import com.danny.projectt.TestActivity;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.model.objects.TeamHistory;
+import com.danny.projectt.views.QuestionView;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -34,10 +35,8 @@ public class QuestionFragmentTest {
     private final Player dummyPlayer = PlayerHelper.getDummyPlayer();
 
     @Rule
-    public FragmentTestRule<QuestionFragment> fragmentRule = new FragmentTestRule<>(QuestionFragment.class, () -> {
-
-        return QuestionFragment.newInstance(dummyPlayer);
-    }
+    public FragmentTestRule<QuestionFragment> fragmentRule = new FragmentTestRule<>(QuestionFragment.class, () -> QuestionFragment
+            .newInstance(dummyPlayer)
     );
 
     @Before
@@ -62,7 +61,7 @@ public class QuestionFragmentTest {
 
         onView(withId(R.id.question_letters)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
 
-        testSubscriber.assertValue(Key.C);
+        testSubscriber.assertValue(Key.E);
         testSubscriber.assertNoErrors();
         testSubscriber.assertNotCompleted();
 
@@ -71,23 +70,36 @@ public class QuestionFragmentTest {
     @Test
     public void testSetTeamHistory() throws Exception {
 
-        final QuestionFragment questionFragment = fragmentRule.getFragment();
+        final QuestionView questionFragment = fragmentRule.getFragment();
 
         final List<TeamHistory> teamHistories = PlayerHelper.getDummyPlayer().teamHistory();
 
         questionFragment.setTeamHistory(Lists.newArrayList(teamHistories));
 
         final TeamHistory teamHistory = teamHistories.get(0);
-        onView(withRecyclerView(R.id.question_teamhistory).atPositionOnView(0, R.id.team_history_start_year))
-                .check(matches(withText("" + teamHistory.startYear())));
 
-        onView(withRecyclerView(R.id.question_teamhistory).atPositionOnView(0, R.id.team_history_end_year))
-                .check(matches(withText("" + teamHistory.endYear())));
+        onView(withRecyclerView(R.id.question_teamhistory).atPositionOnView(0, R.id.team_history_years))
+                .check(matches(withText(String.format("%s-%s", teamHistory.startYear(), teamHistory.endYear()))));
 
         onView(withRecyclerView(R.id.question_teamhistory).atPositionOnView(0, R.id.team_history_name))
                 .check(matches(withText("" + teamHistory.teamName())));
 
+        onView(withRecyclerView(R.id.question_teamhistory).atPositionOnView(0, R.id.team_history_goals))
+                .check(matches(withText("" + teamHistory.leagueStats().goals())));
+
+        onView(withRecyclerView(R.id.question_teamhistory).atPositionOnView(0, R.id.team_history_apps))
+                .check(matches(withText("" + teamHistory.leagueStats().apps())));
 
     }
+
+
+    @Test
+    public void testClue() throws Exception {
+
+        final QuestionView questionFragment = fragmentRule.getFragment();
+
+
+    }
+
 
 }

@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="#2E4B91">
 
-    <include layout="@layout/question_toolbar"/>
+    <include layout="@layout/game_toolbar"/>
 
     <include
         android:id="@+id/team_history_header"

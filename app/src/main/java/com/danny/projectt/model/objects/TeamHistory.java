@@ -10,6 +10,11 @@ import com.google.gson.annotations.SerializedName;
 @AutoValue
 public abstract class TeamHistory implements Parcelable {
 
+    public static TeamHistory create(String teamName, int startYear, int endYear, boolean aLoan, int apps, int goals) {
+
+        return new AutoValue_TeamHistory(teamName, startYear, endYear, aLoan, Stats.create(apps, goals));
+    }
+
     public static TypeAdapter<TeamHistory> typeAdapter(Gson gson) {
 
         return new AutoValue_TeamHistory.GsonTypeAdapter(gson);
@@ -24,6 +29,7 @@ public abstract class TeamHistory implements Parcelable {
     @SerializedName("end")
     public abstract int endYear();
 
+    @SerializedName("loan")
     public abstract boolean aLoan();
 
     public abstract Stats leagueStats();
