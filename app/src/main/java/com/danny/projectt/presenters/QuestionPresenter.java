@@ -44,7 +44,6 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
         this.scoreRepository = scoreRepository;
 
-
     }
 
     @Override
@@ -110,7 +109,8 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
     private void nextQuestion() {
 
-        gameController.finishQuestion(player);
+        gameController.startNext();
+
     }
 
     private void goToMenu() {
@@ -147,6 +147,8 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
         guessFinish = true;
 
         view.showComplete();
+
+        gameController.finishQuestion();
 
         scoreRepository.setSequence(questionManager.getCorrectSequence());
 

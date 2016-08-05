@@ -8,7 +8,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
 
 @AutoValue
-public abstract class TeamHistory implements Parcelable {
+public abstract class TeamHistory implements Parcelable{
 
     public static TeamHistory create(String teamName, int startYear, int endYear, boolean aLoan, int apps, int goals) {
 

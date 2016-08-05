@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.danny.projectt.dagger.scope.PerApp;
+import com.danny.projectt.utils.AutoValueTypeAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import dagger.Module;
 import dagger.Provides;
@@ -33,6 +36,16 @@ public class ApplicationModule {
     SharedPreferences sharedPreferences(Context context) {
 
         return context.getSharedPreferences(APP_PREF_NAME, Context.MODE_PRIVATE);
+    }
+
+    @PerApp
+    @Provides
+    public Gson provideGson() {
+
+        return new GsonBuilder()
+                .registerTypeAdapterFactory(AutoValueTypeAdapterFactory.create())
+                .create();
+
     }
 
 }

@@ -1,10 +1,10 @@
 package com.danny.projectt.model;
 
-import com.danny.projectt.model.database.RealmInteractor;
 import com.danny.projectt.model.network.BackendService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.utils.RxUtils;
 import com.google.common.collect.Lists;
+import com.squareup.tape.ObjectQueue;
 
 import java.util.List;
 
@@ -12,88 +12,116 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class PlayerRepository {
 
+    private static final int THRESHOLD = 5;
+
     private final BackendService backendService;
 
-    private final RealmInteractor realmInteractor;
-
-    private PlayerQueue playerQueue;
+    private final ObjectQueue<Player> playerQueue;
 
     private List<Subscription> subscriptions;
 
     @Inject
-    public PlayerRepository(BackendService backendService, RealmInteractor realmInteractor) {
+    public PlayerRepository(BackendService backendService, ObjectQueue<Player> playerQueue) {
 
         this.backendService = backendService;
-        this.realmInteractor = realmInteractor;
-        this.playerQueue = new PlayerQueue(2);
+        this.playerQueue = playerQueue;
 
         subscriptions = Lists.newArrayList();
 
 
     }
 
-    public void start() {
+    public Observable<Player> getPlayer() {
 
-        Timber.d("Initiating PlayerRepository");
+        BehaviorSubject<Player> playerPublishSubject = BehaviorSubject.create();
 
-        realmInteractor.init();
+        final Player topPlayer = playerQueue.peek();
 
-        final Subscription subscription = realmInteractor.getItems()
-                                                         .doOnCompleted(() -> {
-                                                             if (playerQueue.belowThreshold()) {
-                                                                 fillUpQueue();
-                                                             }
-                                                         })
-                                                         .subscribe(r -> {
-                                                             Timber.d("List: %s", r);
-                                                             playerQueue.addItems(r);
-                                                         }, RxUtils::onError);
+        if (topPlayer == null) {
 
-        subscriptions.add(subscription);
+            ObjectQueue.Listener<Player> listener = new PlayerQueueListener(playerPublishSubject);
+            playerQueue.setListener(listener);
 
+            final Subscription subscription = backendService.getPlayer()
+                                                            .subscribe(players -> {
+
+                                                                for (Player player : players) {
+                                                                    playerQueue.add(player);
+                                                                }
+                                                            }, (e) -> {
+                                                                playerQueue.setListener(null);
+                                                                playerPublishSubject.onError(e);
+                                                            });
+
+            subscriptions.add(subscription);
+
+        } else {
+            playerPublishSubject.onNext(topPlayer);
+        }
+
+        return playerPublishSubject.doOnNext(player -> fillUpQueue());
     }
 
     private void fillUpQueue() {
 
+        if (playerQueue.size() >= THRESHOLD) {
+            return;
+        }
+
         Timber.d("Filling queue, current queue size is %d", playerQueue.size());
 
         final Subscription subscription = backendService.getPlayer()
-                                                        .doOnNext(realmInteractor::insert)
                                                         .subscribe(players -> {
-                                                            Timber.d("List: %s", players);
-                                                            playerQueue.addItems(players);
-                                                        }, RxUtils::onError);
+
+                                                            for (Player player : players) {
+                                                                playerQueue.add(player);
+                                                            }
+
+                                                        }, err -> {
+
+
+                                                        });
 
         subscriptions.add(subscription);
 
     }
 
-    public Observable<Player> getPlayer() {
+    public void markFinished() {
 
-        return playerQueue.getItem().doOnNext(player -> {
-            if (playerQueue.belowThreshold()) {
-                fillUpQueue();
-            }
-        });
-
+        playerQueue.remove();
     }
-
-    public void markFinished(Player player) {
-
-        realmInteractor.markAsFinished(player.id());
-    }
-
 
     public void close() {
 
         RxUtils.safeUnsubscribe(subscriptions);
 
-        realmInteractor.close();
+    }
 
-        playerQueue.close();
+    private static class PlayerQueueListener implements ObjectQueue.Listener<Player> {
+
+        private final BehaviorSubject<Player> playerPublishSubject;
+
+        public PlayerQueueListener(BehaviorSubject<Player> playerPublishSubject) {
+
+            this.playerPublishSubject = playerPublishSubject;
+        }
+
+        @Override
+        public void onAdd(ObjectQueue<Player> queue, Player entry) {
+
+            playerPublishSubject.onNext(entry);
+            queue.setListener(null);
+
+        }
+
+        @Override
+        public void onRemove(ObjectQueue<Player> queue) {
+
+        }
     }
 }

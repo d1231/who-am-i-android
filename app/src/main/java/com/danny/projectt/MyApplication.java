@@ -2,6 +2,7 @@ package com.danny.projectt;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 import com.danny.projectt.dagger.application.ApplicationComponent;
@@ -51,6 +52,15 @@ public class MyApplication extends Application {
         refWatcher = LeakCanary.install(this);
 
         applicationComponent = createComponent();
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+
+        super.attachBaseContext(base);
+
+        MultiDex.install(this);
 
     }
 

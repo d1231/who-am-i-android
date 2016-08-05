@@ -43,16 +43,6 @@ public class NetworkModule {
 
     @PerApp
     @Provides
-    public Gson provideGson() {
-
-        return new GsonBuilder()
-                .registerTypeAdapterFactory(new AutoValueTypeAdapterFactory())
-                .create();
-
-    }
-
-    @PerApp
-    @Provides
     public OkHttpClient provideOkHttpClient() {
 
         final HttpLoggingInterceptor.Logger logger = message -> Timber.tag("OkHttp").d(message);

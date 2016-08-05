@@ -1,5 +1,6 @@
 package com.danny.projectt.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class GameActivity extends AppCompatActivity implements GameNavigator {
     GameController gameController;
 
     private FragmentTransitionManager fragmentTransitionManager;
+
+    private ProgressDialog progressDialog;
 
     public static void start(Context context) {
 
@@ -103,5 +106,21 @@ public class GameActivity extends AppCompatActivity implements GameNavigator {
 
         });
 
+    }
+
+    @Override
+    public void showLoading() {
+
+        progressDialog = ProgressDialog.show(this, getString(R.string.dialog_loading_title), getString(R.string.dialog_loading_msg), true);
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
     }
 }

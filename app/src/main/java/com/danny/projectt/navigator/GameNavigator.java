@@ -8,4 +8,7 @@ public interface GameNavigator {
 
     void showQuestion(Player player);
 
+    void showLoading();
+
+    void hideLoading();
 }

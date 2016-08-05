@@ -17,4 +17,6 @@
     <string name="teamhistory_header_apps_goals">Apps (Goals)</string>
     <string name="teamhistory_header_goals">Goals</string>
     <string name="teamhistory_header_apps">Apps</string>
+    <string name="dialog_loading_title">Please Wait</string>
+    <string name="dialog_loading_msg">Loading</string>
 </resources>

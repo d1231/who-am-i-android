@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 import rx.Subscription;
+import timber.log.Timber;
 
 public class GameController {
 
@@ -26,22 +27,34 @@ public class GameController {
 
     public void startGame() {
 
-        playerRepository.start();
-
         startNextQuestion();
 
     }
 
     private void startNextQuestion() {
 
+        gameNavigator.showLoading();
+
         final Subscription subscription = playerRepository.getPlayer()
-                                                          .subscribe(this::displayQuestion, RxUtils::onError);
+                                                          .subscribe(this::displayQuestion, this::playerError);
 
         subscriptions.add(subscription);
 
     }
 
+    private void playerError(Throwable throwable) {
+
+        // todo network error
+        //
+
+
+        Timber.e(throwable, "Loading player error");
+
+    }
+
     private void displayQuestion(Player player) {
+
+        gameNavigator.hideLoading();
 
         gameNavigator.showQuestion(player);
 
@@ -49,15 +62,22 @@ public class GameController {
 
     public void skipQuestion() {
 
-        startNextQuestion();
-    }
+        playerRepository.markFinished();
 
-    public void finishQuestion(Player p) {
-
-        playerRepository.markFinished(p);
 
         startNextQuestion();
     }
+
+    public void finishQuestion() {
+
+        playerRepository.markFinished();
+    }
+
+    public void startNext() {
+
+        startNextQuestion();
+    }
+
 
     public void quitGame() {
 
