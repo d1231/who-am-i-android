@@ -30,7 +30,7 @@
         android:layout_below="@id/team_history_header"
         android:layout_marginLeft="@dimen/team_history_margin_sides"
         android:layout_marginRight="@dimen/team_history_margin_sides"
-        tools:listitem="@layout/teamhistory"/>
+        tools:listitem="@layout/item_teamhistory"/>
 
 
     <android.support.v7.widget.AppCompatButton

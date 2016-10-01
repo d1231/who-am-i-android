@@ -276,9 +276,9 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     }
 
     @Override
-    public void setNumberOfClues(int integer) {
+    public void setNumberOfClues(int cluesLeft) {
 
-        clueView.setText(String.format("Clue (%d)", integer));
+        clueView.setText(getString(R.string.question_bar_clue, cluesLeft));
 
     }
 

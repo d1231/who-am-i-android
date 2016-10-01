@@ -26,7 +26,7 @@ public class TeamHistoryAdapter extends RecyclerView.Adapter<TeamHistoryViewHold
     @Override
     public TeamHistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        final View view = layoutInflater.inflate(R.layout.teamhistory, parent, false);
+        final View view = layoutInflater.inflate(R.layout.item_teamhistory, parent, false);
 
         return new TeamHistoryViewHolder(view);
     }

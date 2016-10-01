@@ -9,3 +9,5 @@
 gradle/*
 gradlew*
 .idea/*
+libs/
+signing.gradle

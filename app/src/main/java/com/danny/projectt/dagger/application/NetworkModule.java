@@ -2,11 +2,8 @@ package com.danny.projectt.dagger.application;
 
 import com.danny.projectt.BuildConfig;
 import com.danny.projectt.dagger.scope.PerApp;
-import com.danny.projectt.model.PlayerRepository;
 import com.danny.projectt.model.network.BackendService;
-import com.danny.projectt.utils.AutoValueTypeAdapterFactory;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,7 +18,7 @@ import timber.log.Timber;
 @Module
 public class NetworkModule {
 
-    public NetworkModule() {
+    NetworkModule() {
 
     }
 

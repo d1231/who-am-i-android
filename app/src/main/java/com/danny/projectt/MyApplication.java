@@ -8,8 +8,6 @@ import com.crashlytics.android.Crashlytics;
 import com.danny.projectt.dagger.application.ApplicationComponent;
 import com.danny.projectt.dagger.application.ApplicationModule;
 import com.danny.projectt.dagger.application.DaggerApplicationComponent;
-import com.danny.projectt.dagger.application.DataModule;
-import com.danny.projectt.dagger.application.NetworkModule;
 import com.danny.projectt.dagger.game.GameComponent;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -41,8 +39,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         if (BuildConfig.REPORT_CRASHES) {
-            final Crashlytics crashlytics = new Crashlytics();
-            Fabric.with(getApplicationContext(), crashlytics);
+            setupCrashlytics();
         }
 
         if (BuildConfig.DEBUG) {
@@ -55,12 +52,14 @@ public class MyApplication extends Application {
 
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
+    private void setupCrashlytics() {
 
-        super.attachBaseContext(base);
+        final Crashlytics crashlytics = new Crashlytics();
 
-        MultiDex.install(this);
+        Fabric.with(getApplicationContext(), crashlytics);
+
+        Crashlytics.setString("GIT_SHA_KEY", BuildConfig.GIT_SHA);
+        Crashlytics.setString("BUILD_TIME", BuildConfig.BUILD_TIME);
 
     }
 
@@ -69,6 +68,15 @@ public class MyApplication extends Application {
         return DaggerApplicationComponent.builder()
                                          .applicationModule(new ApplicationModule(getApplicationContext()))
                                          .build();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+
+        super.attachBaseContext(base);
+
+        MultiDex.install(this);
+
     }
 
     public ApplicationComponent getApplicationComponent() {

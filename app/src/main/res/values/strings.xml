@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="question_bar_menu">Menu</string>
-    <string name="question_bar_clue">Clue</string>
+    <string name="question_bar_clue" formatted="false">Letter Reveal%n(%d left)</string>
     <string name="question_continue">Continue</string>
     <string name="question_skip">Give up!</string>
 
