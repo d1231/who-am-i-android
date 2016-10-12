@@ -183,6 +183,8 @@ dependencies {
         transitive = true
     }
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+
 }
 
 retrolambda {

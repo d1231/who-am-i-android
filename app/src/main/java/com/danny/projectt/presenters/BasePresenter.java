@@ -10,11 +10,11 @@ import java.util.Collections;
 
 import rx.Subscription;
 
-public abstract class BasePresenter<T extends BaseView> implements Presenter<T> {
+abstract class BasePresenter<T extends BaseView> implements Presenter<T> {
 
     private final ArrayList<Subscription> subscriptionsList = new ArrayList<>();
 
-    protected void addSubscriptions(Subscription... subscriptions) {
+    void addSubscriptions(Subscription... subscriptions) {
 
         Collections.addAll(subscriptionsList, subscriptions);
 

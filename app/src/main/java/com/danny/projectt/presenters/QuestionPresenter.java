@@ -9,6 +9,7 @@ import com.danny.projectt.model.ScoreRepository;
 import com.danny.projectt.model.flow.QuestionManager;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.utils.RxUtils;
+import com.danny.projectt.views.QuestionBarView;
 import com.danny.projectt.views.QuestionView;
 
 import javax.inject.Inject;
@@ -29,12 +30,14 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
     private QuestionManager questionManager;
 
-    private QuestionView view;
+    private QuestionView questionView;
 
     private boolean guessFinish;
 
+    private QuestionBarView questionBarView;
+
     @Inject
-    public QuestionPresenter(GameController gameController, ScoreRepository scoreRepository, ClueRepository clueRepository, Player player) {
+    QuestionPresenter(GameController gameController, ScoreRepository scoreRepository, ClueRepository clueRepository, Player player) {
 
         this.gameController = gameController;
 
@@ -49,7 +52,8 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
     @Override
     public void attachView(QuestionView view) {
 
-        this.view = view;
+        questionView = view;
+        questionBarView = view.getQuestionBarView();
 
         questionManager = new QuestionManager(player.name(), BASE_SCORE, scoreRepository.getCurrentSequence());
 
@@ -57,18 +61,18 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
                                                       .subscribe(view::setGuess, RxUtils::onError, this::guessFinish);
 
         final Subscription totalScoreSub = scoreRepository.getTotalScoreObservable()
-                                                          .subscribe(view::showTotalScore, RxUtils::onError);
+                                                          .subscribe(questionBarView::showTotalScore, RxUtils::onError);
 
         final Subscription clubNumSub = clueRepository.getCluesObservable()
-                                                      .subscribe(view::setNumberOfClues, RxUtils::onError);
+                                                      .subscribe(questionBarView::setClues, RxUtils::onError);
 
         final Subscription guessInputSubs = view.guesses()
                                                 .takeWhile(key -> !guessFinish)
                                                 .subscribe(this::guessLetter, RxUtils::onError);
 
-        final Subscription clueSubs = view.clueClick()
-                                          .takeWhile(res -> !guessFinish)
-                                          .subscribe(this::clueClicked, RxUtils::onError);
+        final Subscription clueSubs = questionBarView.clueClick()
+                                                     .takeWhile(res -> !guessFinish)
+                                                     .subscribe(this::clueClicked, RxUtils::onError);
 
         final Subscription skipSub = view.skipClick()
                                          .takeWhile(res -> !guessFinish)
@@ -77,8 +81,8 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
         final Subscription nextSub = view.moveToNextClick()
                                          .subscribe(res -> nextQuestion(), RxUtils::onError);
 
-        final Subscription menuSub = view.menuClick()
-                                         .subscribe(res -> goToMenu(), RxUtils::onError);
+        final Subscription menuSub = questionBarView.menuClick()
+                                                    .subscribe(res -> goToMenu(), RxUtils::onError);
 
         addSubscriptions(guessInputSubs, guessSubs, clueSubs, nextSub, skipSub, menuSub, totalScoreSub, clubNumSub);
 
@@ -89,20 +93,20 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
     private void skipQuestion() {
 
-        final Subscription dialogSub = view.getDialogBuilder()
-                                           .setTitle(R.string.dialog_skip_title)
-                                           .setMsg(R.string.dialog_skip_msg)
-                                           .setPosMsg(R.string.dialog_skip_pos)
-                                           .setNegMsg(R.string.dialog_skip_neg)
-                                           .create()
-                                           .subscribe(dialogResult -> {
+        final Subscription dialogSub = questionView.getDialogBuilder()
+                                                   .setTitle(R.string.dialog_skip_title)
+                                                   .setMsg(R.string.dialog_skip_msg)
+                                                   .setPosMsg(R.string.dialog_skip_pos)
+                                                   .setNegMsg(R.string.dialog_skip_neg)
+                                                   .create()
+                                                   .subscribe(dialogResult -> {
 
-                                               if (dialogResult == DialogResult.POSITIVE_CLICKED) {
-                                                   scoreRepository.setSequence(0);
-                                                   gameController.skipQuestion();
-                                               }
+                                                       if (dialogResult == DialogResult.POSITIVE_CLICKED) {
+                                                           scoreRepository.setSequence(0);
+                                                           gameController.skipQuestion();
+                                                       }
 
-                                           }, RxUtils::onError);
+                                                   }, RxUtils::onError);
 
         addSubscriptions(dialogSub);
     }
@@ -126,7 +130,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
         super.detachView();
 
-        view = null;
+        questionView = null;
 
     }
 
@@ -137,7 +141,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
         if (clues > 0) {
             char letter = questionManager.randomRevealing();
             clueRepository.clueUsed();
-            view.correctGuess(Key.get(letter));
+            questionView.correctGuess(Key.get(letter));
         }
 
     }
@@ -146,7 +150,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
         guessFinish = true;
 
-        view.showComplete();
+        questionView.showComplete();
 
         gameController.finishQuestion();
 
@@ -160,15 +164,15 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
         final QuestionManager.GuessResults guessResults = questionManager.guess(key.getLetter());
 
         if (guessResults.isCorrectGuess()) {
-            view.correctGuess(key);
+            questionView.correctGuess(key);
         } else {
-            view.incorrectGuess(key);
+            questionView.incorrectGuess(key);
 
         }
 
         final int guessScore = guessResults.getGuessPoints();
         final int totalPoints = guessResults.getTotalPoints();
-        view.updateQuestionScore(totalPoints, guessScore);
+        questionView.updateQuestionScore(totalPoints, guessScore);
     }
 
 }

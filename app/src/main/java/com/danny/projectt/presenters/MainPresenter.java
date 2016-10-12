@@ -1,7 +1,7 @@
 package com.danny.projectt.presenters;
 
-import com.danny.projectt.navigator.MenuNavigator;
 import com.danny.projectt.model.ClueRepository;
+import com.danny.projectt.navigator.MenuNavigator;
 import com.danny.projectt.utils.DateUtils;
 import com.danny.projectt.utils.RxUtils;
 import com.danny.projectt.views.MainView;
@@ -23,7 +23,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     private MainView view;
 
     @Inject
-    public MainPresenter(ClueRepository clueRepository, MenuNavigator menuNavigator) {
+    MainPresenter(ClueRepository clueRepository, MenuNavigator menuNavigator) {
 
         this.clueRepository = clueRepository;
 
@@ -54,12 +54,13 @@ public class MainPresenter extends BasePresenter<MainView> {
             clueRepository.addClues(DAILY_BONUS);
             clueRepository.setBonusTimeStamp(currentCalendar.getTime());
 
-            view.showDailyBonus(DAILY_BONUS);
+            view.showOnDailyBonusReceived(DAILY_BONUS);
         }
     }
 
     @Override
     public void detachView() {
+
         super.detachView();
         view = null;
 

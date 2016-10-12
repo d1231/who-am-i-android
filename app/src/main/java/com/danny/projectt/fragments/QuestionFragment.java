@@ -1,22 +1,16 @@
 package com.danny.projectt.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.danny.projectt.Key;
@@ -31,10 +25,10 @@ import com.danny.projectt.dagger.question.QuestionModule;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.model.objects.TeamHistory;
 import com.danny.projectt.presenters.QuestionPresenter;
+import com.danny.projectt.views.QuestionBarView;
 import com.danny.projectt.views.QuestionView;
 import com.jakewharton.rxbinding.view.RxView;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,13 +39,9 @@ import butterknife.Unbinder;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
-public class QuestionFragment extends BaseFragment implements QuestionView, KeyboardAdapter.KeyClickedListener {
+public class QuestionFragment extends BaseFragment implements QuestionView, QuestionBarView, KeyboardAdapter.KeyClickedListener {
 
     private static final String ARG_PLAYER = "player";
-
-    private static final int MSG_UPDATE_QUESTION_SCORE = 5;
-
-    private static final long TIME_UPDATE_QUESTION_SCORE_DELAY = 500;
 
     @BindView(R.id.question_letters)
     RecyclerView keyboardRv;
@@ -71,10 +61,6 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     @BindView(R.id.question_menu)
     View menuView;
 
-    @BindView(R.id.question_score)
-    TextSwitcher scoreTextSwitcher;
-
-
     @BindView(R.id.question_continue)
     View nextView;
 
@@ -83,8 +69,6 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
 
     @Inject
     QuestionPresenter presenter;
-
-    private Handler handler = new ScoreUpdaterHandler(this);
 
     private PublishSubject<Key> guessedLettersSubject = PublishSubject.create();
 
@@ -145,7 +129,7 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.screen_question, container, false);
+        return inflater.inflate(R.layout.screen_question_new, container, false);
     }
 
     @Override
@@ -155,22 +139,6 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
 
         unbinder = ButterKnife.bind(this, view);
 
-        scoreTextSwitcher.setFactory(() -> {
-
-            TextView myText = new TextView(getContext());
-            myText.setGravity(Gravity.CENTER);
-
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT,
-                    Gravity.CENTER);
-
-            myText.setLayoutParams(params);
-
-            myText.setTextSize(36);
-            myText.setTextColor(Color.BLACK);
-            return myText;
-
-        });
 
         initKeyboard();
 
@@ -183,63 +151,13 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
         final Context context = getContext();
 
         final GridLayoutManager layoutManager = new GridLayoutManager(context, 20, LinearLayoutManager.VERTICAL, false);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-
-            @Override
-            public int getSpanSize(int position) {
-
-                if (position == Key.Z.ordinal() || position == Key.M.ordinal()) {
-                    return 5;
-                } else if (position == Key.A.ordinal() || position == Key.L.ordinal()) {
-                    return 3;
-                } else {
-                    return 2;
-                }
-            }
-        });
+        layoutManager.setSpanSizeLookup(new KeyboardSpanSizeLookup());
 
         keyboardRv.setLayoutManager(layoutManager);
 
         keyboardRv.setItemAnimator(new DefaultItemAnimator());
 
-        keyboardRv.addItemDecoration(new RecyclerView.ItemDecoration() {
-
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-
-                final int position = parent.getChildLayoutPosition(view);
-
-                final int width = parent.getMeasuredWidth() / 20;
-
-                int left = 0;
-                int right = 0;
-                if (position == Key.A.ordinal() || position == Key.L.ordinal()) {
-
-                    final int margin = width;
-
-                    if (position == Key.A.ordinal()) {
-                        left = margin;
-                    } else {
-                        right = margin;
-                    }
-
-                    outRect.set(left, 0, right, 0);
-                } else if (position == Key.Z.ordinal() || position == Key.M.ordinal()) {
-
-                    final int margin = width * 3;
-
-                    if (position == Key.Z.ordinal()) {
-                        left = margin;
-                    } else {
-                        right = margin;
-                    }
-
-                }
-
-                outRect.set(left, 0, right, 0);
-            }
-
-        });
+        keyboardRv.addItemDecoration(new KeyboardItemDecoration());
 
         keyboardAdapter = new KeyboardAdapter(context, this);
         keyboardRv.setAdapter(keyboardAdapter);
@@ -260,6 +178,12 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     }
 
     @Override
+    public QuestionBarView getQuestionBarView() {
+
+        return this;
+    }
+
+    @Override
     public void setTeamHistory(List<TeamHistory> teamHistory) {
 
         Context context = getContext();
@@ -276,38 +200,13 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     }
 
     @Override
-    public void setNumberOfClues(int cluesLeft) {
-
-        clueView.setText(getString(R.string.question_bar_clue, cluesLeft));
-
-    }
-
-    @Override
     public void updateQuestionScore(int score) {
 
-        scoreTextSwitcher.setCurrentText(String.format("%s", score));
-
     }
+
 
     @Override
     public void updateQuestionScore(int score, int change) {
-
-        if (change > 0) {
-            scoreTextSwitcher.setText(String.format("+%s", change));
-        } else {
-            scoreTextSwitcher.setText(String.format("%s", change));
-        }
-
-        final Message msg = ScoreUpdaterHandler.scoreUpdateMessage(handler, score);
-
-        handler.removeMessages(MSG_UPDATE_QUESTION_SCORE);
-        handler.sendMessageDelayed(msg, TIME_UPDATE_QUESTION_SCORE_DELAY);
-    }
-
-    @Override
-    public void showTotalScore(int score) {
-
-        totalScoreTv.setText(String.format("%s", score));
 
     }
 
@@ -336,7 +235,6 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
 
         nextView.setVisibility(View.VISIBLE);
         skipView.setVisibility(View.GONE);
-        scoreTextSwitcher.setVisibility(View.GONE);
 
     }
 
@@ -354,15 +252,29 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
     }
 
     @Override
-    public Observable<Void> clueClick() {
-
-        return RxView.clicks(clueView);
-    }
-
-    @Override
     public Observable<Void> skipClick() {
 
         return RxView.clicks(skipView);
+    }
+
+    @Override
+    public void setClues(int clues) {
+
+        clueView.setText(getString(R.string.question_bar_clue, clues));
+
+    }
+
+    @Override
+    public void showTotalScore(int score) {
+
+        totalScoreTv.setText(String.format("%s", score));
+
+    }
+
+    @Override
+    public Observable<Void> clueClick() {
+
+        return RxView.clicks(clueView);
     }
 
     @Override
@@ -378,37 +290,56 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Keyb
 
     }
 
-    private static class ScoreUpdaterHandler extends Handler {
 
-        private final WeakReference<QuestionFragment> fragWeakRef;
-
-        public ScoreUpdaterHandler(QuestionFragment questionFragment) {
-
-            this.fragWeakRef = new WeakReference<>(questionFragment);
-        }
-
-        public static Message scoreUpdateMessage(Handler h, int score) {
-
-            return h.obtainMessage(MSG_UPDATE_QUESTION_SCORE, score, 0);
-        }
+    private static class KeyboardItemDecoration extends RecyclerView.ItemDecoration {
 
         @Override
-        public void handleMessage(Message msg) {
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 
-            switch (msg.what) {
-                case MSG_UPDATE_QUESTION_SCORE:
-                    final QuestionFragment questionFragment = fragWeakRef.get();
+            final int position = parent.getChildLayoutPosition(view);
 
-                    if (questionFragment != null) {
-                        questionFragment.updateQuestionScore(msg.arg1);
-                    }
-                    break;
-                default:
-                    throw new IllegalStateException("Unknown message");
+            final int width = parent.getMeasuredWidth() / 20;
+
+            int left = 0;
+            int right = 0;
+            if (position == Key.A.ordinal() || position == Key.L.ordinal()) {
+
+                if (position == Key.A.ordinal()) {
+                    left = width;
+                } else {
+                    right = width;
+                }
+
+                outRect.set(left, 0, right, 0);
+            } else if (position == Key.Z.ordinal() || position == Key.M.ordinal()) {
+
+                final int margin = width * 3;
+
+                if (position == Key.Z.ordinal()) {
+                    left = margin;
+                } else {
+                    right = margin;
+                }
+
             }
 
-
+            outRect.set(left, 0, right, 0);
         }
 
+    }
+
+    private static class KeyboardSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
+
+        @Override
+        public int getSpanSize(int position) {
+
+            if (position == Key.Z.ordinal() || position == Key.M.ordinal()) {
+                return 5;
+            } else if (position == Key.A.ordinal() || position == Key.L.ordinal()) {
+                return 3;
+            } else {
+                return 2;
+            }
+        }
     }
 }

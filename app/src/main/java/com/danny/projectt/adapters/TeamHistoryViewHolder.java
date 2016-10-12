@@ -11,7 +11,7 @@ import com.danny.projectt.model.objects.TeamHistory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TeamHistoryViewHolder extends RecyclerView.ViewHolder {
+class TeamHistoryViewHolder extends RecyclerView.ViewHolder {
 
 
     @BindView(R.id.team_history_years)
@@ -26,7 +26,7 @@ public class TeamHistoryViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.team_history_goals)
     TextView teamHistoryGoals;
 
-    public TeamHistoryViewHolder(View itemView) {
+    TeamHistoryViewHolder(View itemView) {
 
         super(itemView);
         ButterKnife.bind(this, itemView);

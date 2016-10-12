@@ -9,15 +9,13 @@ import rx.Observable;
 
 public interface QuestionView extends BaseView {
 
-    void setTeamHistory(List<TeamHistory> teamHistory);
+    QuestionBarView getQuestionBarView();
 
-    void setNumberOfClues(int integer);
+    void setTeamHistory(List<TeamHistory> teamHistory);
 
     void updateQuestionScore(int score);
 
     void updateQuestionScore(int score, int change);
-
-    void showTotalScore(int score);
 
     void setGuess(String guess);
 
@@ -31,10 +29,6 @@ public interface QuestionView extends BaseView {
 
     Observable<Void> moveToNextClick();
 
-    Observable<Void> clueClick();
-
     Observable<Void> skipClick();
-
-    Observable<Void> menuClick();
 
 }

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.danny.projectt.navigator.MenuNavigator;
 import com.danny.projectt.MyApplication;
 import com.danny.projectt.R;
 import com.danny.projectt.dagger.application.ApplicationComponent;
@@ -14,6 +13,7 @@ import com.danny.projectt.dagger.main.DaggerMainComponent;
 import com.danny.projectt.dagger.main.MainModule;
 import com.danny.projectt.fragments.AndroidYesNoDialogBuilder;
 import com.danny.projectt.fragments.YesNoDialogBuilder;
+import com.danny.projectt.navigator.MenuNavigator;
 import com.danny.projectt.presenters.MainPresenter;
 import com.danny.projectt.views.MainView;
 import com.jakewharton.rxbinding.view.RxView;
@@ -75,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void showDailyBonus(int dailyBonus) {
+    public void showOnDailyBonusReceived(int dailyBonus) {
 
-        Toast.makeText(MainActivity.this, String.format("Congratz! You received your daily bonus of %d clues", dailyBonus), Toast.LENGTH_SHORT)
+        Toast.makeText(MainActivity.this, getString(R.string.toast_daily_bonus, dailyBonus), Toast.LENGTH_SHORT)
              .show();
 
     }

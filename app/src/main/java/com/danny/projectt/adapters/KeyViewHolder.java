@@ -15,7 +15,7 @@ class KeyViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.letter)
     Button button;
 
-    public KeyViewHolder(View itemView) {
+    KeyViewHolder(View itemView) {
 
         super(itemView);
 

@@ -1,22 +1,26 @@
 <resources>
-    <string name="app_name">Who Am I? - Football edition</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Who Am I? - Football edition</string>
 
     <string name="question_bar_menu">Menu</string>
     <string name="question_bar_clue" formatted="false">Letter Reveal%n(%d left)</string>
     <string name="question_continue">Continue</string>
     <string name="question_skip">Give up!</string>
+    <string name="question_bar_points" formatted="false">My Points:%n%s</string>
 
     <string name="dialog_skip_title">Skip question</string>
-    <string name="dialog_skip_msg">Are you sure you want to give up and procceed to next question?</string>
+    <string name="dialog_skip_msg">Giving up and moving to the next question?</string>
     <string name="dialog_skip_pos">Give up</string>
-    <string name="dialog_skip_neg">Try again</string>
+    <string name="dialog_skip_neg">Not yet!</string>
+
     <string name="teamhistory_header_years">Years</string>
     <string name="teamhistory_header_team">Team</string>
     <string name="teamhistory_header_apps_goals">Apps (Goals)</string>
     <string name="teamhistory_header_goals">Goals</string>
     <string name="teamhistory_header_apps">Apps</string>
+
     <string name="dialog_loading_title">Please Wait</string>
     <string name="dialog_loading_msg">Loading</string>
+
+    <string name="toast_daily_bonus" formatted="false">Congratz! You received your daily bonus of %d clues</string>
 </resources>

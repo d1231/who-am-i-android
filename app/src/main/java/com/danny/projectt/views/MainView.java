@@ -6,6 +6,6 @@ public interface MainView extends BaseView {
 
     Observable<Void> onPlayClick();
 
-    void showDailyBonus(int dailyBonus);
+    void showOnDailyBonusReceived(int dailyBonus);
 
 }
