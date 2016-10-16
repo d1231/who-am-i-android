@@ -4,8 +4,8 @@ import com.danny.projectt.GameController;
 import com.danny.projectt.activities.GameActivity;
 import com.danny.projectt.dagger.application.ApplicationComponent;
 import com.danny.projectt.dagger.scope.PerGame;
-import com.danny.projectt.model.ClueRepository;
-import com.danny.projectt.model.ScoreRepository;
+import com.danny.projectt.model.ClueService;
+import com.danny.projectt.model.ScoreService;
 
 import dagger.Component;
 
@@ -22,8 +22,8 @@ public interface GameComponent {
 
     GameController gameController();
 
-    ScoreRepository scoreRepository();
+    ScoreService scoreRepository();
 
-    ClueRepository clueReposistory();
+    ClueService clueReposistory();
 
 }

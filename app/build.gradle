@@ -140,8 +140,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 
-    compile 'org.lucasr.twowayview:core:1.0.0-SNAPSHOT@aar'
-    compile 'org.lucasr.twowayview:layouts:1.0.0-SNAPSHOT@aar'
+//    compile 'org.lucasr.twowayview:core:1.0.0-SNAPSHOT@aar'
+//    compile 'org.lucasr.twowayview:layouts:1.0.0-SNAPSHOT@aar'
 
     //rx
     compile 'io.reactivex:rxandroid:1.1.0'

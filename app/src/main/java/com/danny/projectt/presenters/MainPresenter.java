@@ -1,6 +1,6 @@
 package com.danny.projectt.presenters;
 
-import com.danny.projectt.model.ClueRepository;
+import com.danny.projectt.model.ClueService;
 import com.danny.projectt.navigator.MenuNavigator;
 import com.danny.projectt.utils.DateUtils;
 import com.danny.projectt.utils.RxUtils;
@@ -16,16 +16,16 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     private static final int DAILY_BONUS = 10;
 
-    private final ClueRepository clueRepository;
+    private final ClueService clueService;
 
     private final MenuNavigator menuNavigator;
 
     private MainView view;
 
     @Inject
-    MainPresenter(ClueRepository clueRepository, MenuNavigator menuNavigator) {
+    MainPresenter(ClueService clueService, MenuNavigator menuNavigator) {
 
-        this.clueRepository = clueRepository;
+        this.clueService = clueService;
 
         this.menuNavigator = menuNavigator;
     }
@@ -46,13 +46,13 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     private void clueBonus() {
 
-        final Date savedCalendar = DateUtils.getCalendarDate(clueRepository.lastClueBonusTimestamp());
+        final Date savedCalendar = DateUtils.getCalendarDate(clueService.lastClueBonusTimestamp());
         final Date currentCalendar = DateUtils.getCalendarDate(System.currentTimeMillis());
 
         if (currentCalendar.after(savedCalendar)) {
 
-            clueRepository.addClues(DAILY_BONUS);
-            clueRepository.setBonusTimeStamp(currentCalendar.getTime());
+            clueService.addClues(DAILY_BONUS);
+            clueService.setBonusTimeStamp(currentCalendar.getTime());
 
             view.showOnDailyBonusReceived(DAILY_BONUS);
         }

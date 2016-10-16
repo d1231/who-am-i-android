@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="team_history_margin_sides">16dp</dimen>
+    <dimen name="main_button_margin_sides">150dp</dimen>
 </resources>

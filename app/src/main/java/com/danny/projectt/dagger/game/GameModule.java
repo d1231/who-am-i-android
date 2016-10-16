@@ -3,7 +3,7 @@ package com.danny.projectt.dagger.game;
 import com.danny.projectt.GameController;
 import com.danny.projectt.navigator.GameNavigator;
 import com.danny.projectt.dagger.scope.PerGame;
-import com.danny.projectt.model.PlayerRepository;
+import com.danny.projectt.model.PlayerService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,9 +21,9 @@ public class GameModule {
 
     @PerGame
     @Provides
-    public GameController provideGameController(PlayerRepository playerRepository, GameNavigator gameNavigator) {
+    public GameController provideGameController(PlayerService playerService, GameNavigator gameNavigator) {
 
-        return new GameController(playerRepository, gameNavigator);
+        return new GameController(playerService, gameNavigator);
 
     }
 

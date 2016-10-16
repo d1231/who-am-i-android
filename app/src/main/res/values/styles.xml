@@ -83,5 +83,13 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="buttonStyle">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginEnd">@dimen/main_button_margin_sides</item>
+        <item name="android:layout_marginStart">@dimen/main_button_margin_sides</item>
+        <item name="android:background">@drawable/button_main</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 
 </resources>

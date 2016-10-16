@@ -76,10 +76,6 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Ques
 
     private Unbinder unbinder;
 
-    public QuestionFragment() {
-
-    }
-
     public static QuestionFragment newInstance(Player player) {
 
         QuestionFragment fragment = new QuestionFragment();
@@ -151,7 +147,8 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Ques
         final Context context = getContext();
 
         final GridLayoutManager layoutManager = new GridLayoutManager(context, 20, LinearLayoutManager.VERTICAL, false);
-        layoutManager.setSpanSizeLookup(new KeyboardSpanSizeLookup());
+        final KeyboardSpanSizeLookup keyboardSpanSizeLookup = new KeyboardSpanSizeLookup();
+        layoutManager.setSpanSizeLookup(keyboardSpanSizeLookup);
 
         keyboardRv.setLayoutManager(layoutManager);
 

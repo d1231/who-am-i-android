@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
-public class ClueRepository {
+public class ClueService {
 
     private static final String PREF_CLUE = "clues";
 
@@ -19,7 +19,7 @@ public class ClueRepository {
 
     private long bonusTimeStamp;
 
-    public ClueRepository(SharedPreferences sharedPreferences) {
+    public ClueService(SharedPreferences sharedPreferences) {
 
         this.sharedPreferences = sharedPreferences;
         this.clues = sharedPreferences.getInt(PREF_CLUE, 25);

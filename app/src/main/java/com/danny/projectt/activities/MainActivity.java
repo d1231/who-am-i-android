@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         final ApplicationComponent applicationComponent = MyApplication.get(this)
                                                                        .getApplicationComponent();
 
+        //noinspection Convert2Lambda
         MenuNavigator menuNavigator = new MenuNavigator() {
 
             @Override
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
                 GameActivity.start(MainActivity.this);
             }
+
         };
 
         final DaggerMainComponent.Builder mainComponent = DaggerMainComponent.builder()

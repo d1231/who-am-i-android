@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
-public class ScoreRepository {
+public class ScoreService {
 
     static final String PREF_SCORE = "score";
 
@@ -20,13 +20,13 @@ public class ScoreRepository {
 
     private BehaviorSubject<Integer> scoreSubject = BehaviorSubject.create();
 
-    public ScoreRepository(SharedPreferences sharedPreferences) {
+    public ScoreService(SharedPreferences sharedPreferences) {
 
         this.sharedPreferences = sharedPreferences;
         this.totalScore = sharedPreferences.getInt(PREF_SCORE, 0);
         this.currentSequence = sharedPreferences.getInt(PREF_SEQUENCE, 0);
 
-        scoreSubject.onNext(totalScore);
+        scoreSubject.onNext(totalScore); // setup default
 
     }
 

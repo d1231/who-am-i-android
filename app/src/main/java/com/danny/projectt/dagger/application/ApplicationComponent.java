@@ -1,9 +1,9 @@
 package com.danny.projectt.dagger.application;
 
 import com.danny.projectt.dagger.scope.PerApp;
-import com.danny.projectt.model.ClueRepository;
-import com.danny.projectt.model.PlayerRepository;
-import com.danny.projectt.model.ScoreRepository;
+import com.danny.projectt.model.ClueService;
+import com.danny.projectt.model.PlayerService;
+import com.danny.projectt.model.ScoreService;
 
 import dagger.Component;
 
@@ -17,10 +17,10 @@ import dagger.Component;
 @PerApp
 public interface ApplicationComponent {
 
-    PlayerRepository playerRepository();
+    PlayerService playerRepository();
 
-    ScoreRepository scoreRepository();
+    ScoreService scoreRepository();
 
-    ClueRepository clueRepository();
+    ClueService clueRepository();
 
 }

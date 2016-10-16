@@ -23,4 +23,11 @@
     <string name="dialog_loading_msg">Loading</string>
 
     <string name="toast_daily_bonus" formatted="false">Congratz! You received your daily bonus of %d clues</string>
+
+    <string name="main_start">Play</string>
+    <string name="main_settings">Settings</string>
+
+    <string name="options_title">Options</string>
+    <string name="options_start_game">Start game</string>
+
 </resources>

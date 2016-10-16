@@ -1,6 +1,7 @@
 package com.danny.projectt;
 
-import com.danny.projectt.model.PlayerRepository;
+import com.danny.projectt.model.PlayerService;
+import com.danny.projectt.model.UserService;
 import com.danny.projectt.model.network.BackendService;
 import com.danny.projectt.model.objects.Player;
 import com.google.common.collect.Lists;
@@ -23,21 +24,25 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static sharedTest.PlayerHelper.createPlayer;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PlayerRepositoryTest {
+public class PlayerServiceTest {
 
     @Mock
     BackendService backendService;
 
-    PlayerRepository playerRepository;
+    @Mock
+    UserService userService;
+
+    private PlayerService playerService;
 
     private InMemoryObjectQueue<Player> playerQueue;
+
 
     @Before
     public void setUp() throws Exception {
 
         playerQueue = new InMemoryObjectQueue<>();
 
-        playerRepository = new PlayerRepository(backendService, playerQueue);
+        playerService = new PlayerService(backendService, userService, playerQueue);
 
 
     }
@@ -52,7 +57,7 @@ public class PlayerRepositoryTest {
 
         when(backendService.getPlayer()).thenReturn(Observable.just(result1));
 
-        playerRepository.getPlayer().subscribe(subscriber);
+        playerService.getPlayer().subscribe(subscriber);
 
         verify(backendService, times(2)).getPlayer();
 
@@ -72,8 +77,7 @@ public class PlayerRepositoryTest {
 
         when(backendService.getPlayer()).thenReturn(Observable.just(result1));
 
-
-        playerRepository.getPlayer().subscribe(subscriber);
+        playerService.getPlayer().subscribe(subscriber);
 
         verify(backendService, times(1)).getPlayer();
 

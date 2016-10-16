@@ -1,6 +1,6 @@
 package com.danny.projectt;
 
-import com.danny.projectt.model.PlayerRepository;
+import com.danny.projectt.model.PlayerService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.navigator.GameNavigator;
 import com.danny.projectt.utils.RxUtils;
@@ -15,13 +15,13 @@ public class GameController {
 
     private final GameNavigator gameNavigator;
 
-    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
 
     private final List<Subscription> subscriptions = Lists.newArrayList();
 
-    public GameController(PlayerRepository playerRepository, GameNavigator gameNavigator) {
+    public GameController(PlayerService playerService, GameNavigator gameNavigator) {
 
-        this.playerRepository = playerRepository;
+        this.playerService = playerService;
         this.gameNavigator = gameNavigator;
     }
 
@@ -35,8 +35,8 @@ public class GameController {
 
         gameNavigator.showLoading();
 
-        final Subscription subscription = playerRepository.getPlayer()
-                                                          .subscribe(this::displayQuestion, this::playerError);
+        final Subscription subscription = playerService.getPlayer()
+                                                       .subscribe(this::displayQuestion, this::playerError);
 
         subscriptions.add(subscription);
 
@@ -62,7 +62,7 @@ public class GameController {
 
     public void skipQuestion() {
 
-        playerRepository.markFinished();
+        playerService.markFinished();
 
 
         startNextQuestion();
@@ -70,7 +70,7 @@ public class GameController {
 
     public void finishQuestion() {
 
-        playerRepository.markFinished();
+        playerService.markFinished();
     }
 
     public void startNext() {
@@ -87,7 +87,7 @@ public class GameController {
 
     public void finishGame() {
 
-        playerRepository.close();
+        playerService.close();
         RxUtils.safeUnsubscribe(subscriptions);
 
     }

@@ -2,9 +2,10 @@ package com.danny.projectt.presenters;
 
 import com.danny.projectt.GameController;
 import com.danny.projectt.Key;
-import com.danny.projectt.model.ClueRepository;
-import com.danny.projectt.model.ScoreRepository;
+import com.danny.projectt.model.ClueService;
+import com.danny.projectt.model.ScoreService;
 import com.danny.projectt.model.objects.Player;
+import com.danny.projectt.views.QuestionBarView;
 import com.danny.projectt.views.QuestionView;
 
 import org.junit.Before;
@@ -33,27 +34,35 @@ public class QuestionPresenterTest {
     QuestionView questionView;
 
     @Mock
-    ScoreRepository scoreRepository;
+    ScoreService scoreService;
 
     @Mock
-    ClueRepository clueRepo;
+    ClueService clueRepo;
 
-    QuestionPresenter questionPresenter;
+    @Mock
+    QuestionBarView questionBarView;
 
-    Player dummyPlayer = PlayerHelper.getDummyPlayer();
+    private QuestionPresenter questionPresenter;
+
+    private Player player;
 
     @Before
     public void setUp() throws Exception {
 
-        questionPresenter = new QuestionPresenter(gameController, scoreRepository, clueRepo, dummyPlayer);
+        player = PlayerHelper.getDummyPlayer();
+
+        questionPresenter = new QuestionPresenter(gameController, scoreService, clueRepo, player);
 
         when(questionView.guesses()).thenReturn(Observable.never());
-        when(questionView.clueClick()).thenReturn(Observable.never());
         when(questionView.moveToNextClick()).thenReturn(Observable.never());
         when(questionView.skipClick()).thenReturn(Observable.never());
-        when(questionView.menuClick()).thenReturn(Observable.never());
 
-        when(scoreRepository.getTotalScoreObservable()).thenReturn(Observable.never());
+        when(questionView.getQuestionBarView()).thenReturn(questionBarView);
+
+        when(questionBarView.clueClick()).thenReturn(Observable.never());
+        when(questionBarView.menuClick()).thenReturn(Observable.never());
+
+        when(scoreService.getTotalScoreObservable()).thenReturn(Observable.never());
 
         when(clueRepo.getCluesObservable()).thenReturn(Observable.never());
         when(clueRepo.getClues()).thenReturn(0);
@@ -64,7 +73,7 @@ public class QuestionPresenterTest {
 
         questionPresenter.attachView(questionView);
 
-        verify(questionView, times(1)).setTeamHistory(dummyPlayer.teamHistory());
+        verify(questionView, times(1)).setTeamHistory(player.teamHistory());
     }
 
     @Test
@@ -100,16 +109,16 @@ public class QuestionPresenterTest {
 
         verify(questionView, times(1)).showComplete();
 
-        verify(scoreRepository, times(1)).setSequence(arr.length);
+        verify(scoreService, times(1)).setSequence(arr.length);
 
-        verify(scoreRepository, times(1)).addQuestionScore(anyInt());
+        verify(scoreService, times(1)).addQuestionScore(anyInt());
 
     }
 
     @Test
     public void testClue() throws Exception {
 
-        when(questionView.clueClick()).thenReturn(Observable.defer(() -> Observable.just(null)));
+        when(questionBarView.clueClick()).thenReturn(Observable.defer(() -> Observable.just(null)));
 
         when(clueRepo.getClues()).thenReturn(1);
 

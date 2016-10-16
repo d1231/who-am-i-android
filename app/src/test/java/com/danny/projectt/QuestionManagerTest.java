@@ -1,7 +1,5 @@
 package com.danny.projectt;
 
-import com.danny.projectt.model.flow.QuestionManager;
-
 import org.junit.Test;
 
 import rx.Observable;

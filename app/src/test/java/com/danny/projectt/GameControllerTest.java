@@ -1,6 +1,6 @@
 package com.danny.projectt;
 
-import com.danny.projectt.model.PlayerRepository;
+import com.danny.projectt.model.PlayerService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.navigator.GameNavigator;
 
@@ -22,7 +22,7 @@ import static sharedTest.PlayerHelper.getDummyPlayer;
 public class GameControllerTest {
 
     @Mock
-    PlayerRepository playerRepository;
+    PlayerService playerService;
 
     @Mock
     GameNavigator gameNavigator;
@@ -33,7 +33,7 @@ public class GameControllerTest {
     @Before
     public void setUp() throws Exception {
 
-        when(playerRepository.getPlayer()).thenReturn(Observable.never());
+        when(playerService.getPlayer()).thenReturn(Observable.never());
 
     }
 
@@ -41,7 +41,7 @@ public class GameControllerTest {
     public void testStartGame() throws Exception {
 
         Player player = getDummyPlayer();
-        when(playerRepository.getPlayer()).thenReturn(Observable.defer(() -> Observable.just(player)));
+        when(playerService.getPlayer()).thenReturn(Observable.defer(() -> Observable.just(player)));
 
         gameController.startGame();
 
@@ -54,7 +54,7 @@ public class GameControllerTest {
 
         gameController.finishQuestion();
 
-        verify(playerRepository, times(1)).getPlayer();
+        verify(playerService, times(1)).getPlayer();
     }
 
     @Test

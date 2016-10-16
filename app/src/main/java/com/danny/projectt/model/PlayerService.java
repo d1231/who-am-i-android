@@ -1,6 +1,7 @@
 package com.danny.projectt.model;
 
 import com.danny.projectt.model.network.BackendService;
+import com.danny.projectt.model.objects.GameOptions;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.utils.RxUtils;
 import com.google.common.collect.Lists;
@@ -15,20 +16,23 @@ import rx.Subscription;
 import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
-public class PlayerRepository {
+public class PlayerService {
 
     private static final int THRESHOLD = 5;
 
     private final BackendService backendService;
+
+    private final UserService userService;
 
     private final ObjectQueue<Player> playerQueue;
 
     private List<Subscription> subscriptions;
 
     @Inject
-    public PlayerRepository(BackendService backendService, ObjectQueue<Player> playerQueue) {
+    public PlayerService(BackendService backendService, UserService userService, ObjectQueue<Player> playerQueue) {
 
         this.backendService = backendService;
+        this.userService = userService;
         this.playerQueue = playerQueue;
 
         subscriptions = Lists.newArrayList();
@@ -44,10 +48,13 @@ public class PlayerRepository {
 
         if (topPlayer == null) {
 
+            // set up listener to publish result to subscribers
             ObjectQueue.Listener<Player> listener = new PlayerQueueListener(playerPublishSubject);
             playerQueue.setListener(listener);
 
-            final Subscription subscription = backendService.getPlayer()
+            final GameOptions gameOptions = userService.getGameOptions();
+
+            final Subscription subscription = backendService.getPlayer(gameOptions.toQueryMap())
                                                             .subscribe(players -> {
 
                                                                 for (Player player : players) {
@@ -75,7 +82,9 @@ public class PlayerRepository {
 
         Timber.d("Filling queue, current queue size is %d", playerQueue.size());
 
-        final Subscription subscription = backendService.getPlayer()
+        final GameOptions gameOptions = userService.getGameOptions();
+
+        final Subscription subscription = backendService.getPlayer(gameOptions.toQueryMap())
                                                         .subscribe(players -> {
 
                                                             for (Player player : players) {
@@ -106,7 +115,7 @@ public class PlayerRepository {
 
         private final BehaviorSubject<Player> playerPublishSubject;
 
-        public PlayerQueueListener(BehaviorSubject<Player> playerPublishSubject) {
+        PlayerQueueListener(BehaviorSubject<Player> playerPublishSubject) {
 
             this.playerPublishSubject = playerPublishSubject;
         }
