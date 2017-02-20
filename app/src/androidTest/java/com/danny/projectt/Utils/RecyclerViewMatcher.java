@@ -1,4 +1,4 @@
-package com.dannyroa.espresso_samples.recyclerview;
+package com.danny.projectt.Utils;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;

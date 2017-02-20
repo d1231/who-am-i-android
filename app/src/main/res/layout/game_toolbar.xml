@@ -15,7 +15,7 @@
         android:clickable="true">
 
         <TextView
-            android:id="@+id/question_menu"
+            android:id="@+id/question_bar_menu"
             style="@style/bar_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,7 +32,7 @@
         android:clickable="true">
 
         <TextView
-            android:id="@+id/question_clue"
+            android:id="@+id/question_bar_clue"
             style="@style/bar_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,14 +42,14 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/question_total_score"
+        android:id="@+id/question_bar_share"
         style="@style/bar_item"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#1A9FCC"
         android:clickable="true"
-        android:text="@string/question_bar_points"/>
+        android:text="@string/question_bar_share"/>
 
 
 </LinearLayout>

@@ -3,7 +3,6 @@ package com.danny.projectt.dagger.application;
 import com.danny.projectt.dagger.scope.PerApp;
 import com.danny.projectt.model.ClueService;
 import com.danny.projectt.model.PlayerService;
-import com.danny.projectt.model.ScoreService;
 
 import dagger.Component;
 
@@ -18,8 +17,6 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     PlayerService playerRepository();
-
-    ScoreService scoreRepository();
 
     ClueService clueRepository();
 

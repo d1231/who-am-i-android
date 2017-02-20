@@ -3,7 +3,6 @@ package com.danny.projectt.presenters;
 import com.danny.projectt.GameController;
 import com.danny.projectt.Key;
 import com.danny.projectt.model.ClueService;
-import com.danny.projectt.model.ScoreService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.views.QuestionBarView;
 import com.danny.projectt.views.QuestionView;
@@ -18,7 +17,6 @@ import rx.Observable;
 import sharedTest.PlayerHelper;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,9 +30,6 @@ public class QuestionPresenterTest {
 
     @Mock
     QuestionView questionView;
-
-    @Mock
-    ScoreService scoreService;
 
     @Mock
     ClueService clueRepo;
@@ -51,7 +46,7 @@ public class QuestionPresenterTest {
 
         player = PlayerHelper.getDummyPlayer();
 
-        questionPresenter = new QuestionPresenter(gameController, scoreService, clueRepo, player);
+        questionPresenter = new QuestionPresenter(gameController, clueRepo, player);
 
         when(questionView.guesses()).thenReturn(Observable.never());
         when(questionView.moveToNextClick()).thenReturn(Observable.never());
@@ -61,8 +56,6 @@ public class QuestionPresenterTest {
 
         when(questionBarView.clueClick()).thenReturn(Observable.never());
         when(questionBarView.menuClick()).thenReturn(Observable.never());
-
-        when(scoreService.getTotalScoreObservable()).thenReturn(Observable.never());
 
         when(clueRepo.getCluesObservable()).thenReturn(Observable.never());
         when(clueRepo.getClues()).thenReturn(0);
@@ -108,10 +101,6 @@ public class QuestionPresenterTest {
         verify(questionView, times(arr.length)).correctGuess(any());
 
         verify(questionView, times(1)).showComplete();
-
-        verify(scoreService, times(1)).setSequence(arr.length);
-
-        verify(scoreService, times(1)).addQuestionScore(anyInt());
 
     }
 

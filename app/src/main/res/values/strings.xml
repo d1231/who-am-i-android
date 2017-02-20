@@ -29,5 +29,6 @@
 
     <string name="options_title">Options</string>
     <string name="options_start_game">Start game</string>
+    <string name="question_bar_share">Share</string>
 
 </resources>

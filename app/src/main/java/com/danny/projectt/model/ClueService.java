@@ -17,8 +17,6 @@ public class ClueService {
 
     private BehaviorSubject<Integer> cluesSubject;
 
-    private long bonusTimeStamp;
-
     public ClueService(SharedPreferences sharedPreferences) {
 
         this.sharedPreferences = sharedPreferences;

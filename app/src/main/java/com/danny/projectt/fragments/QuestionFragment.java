@@ -52,13 +52,13 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Ques
     @BindView(R.id.question_answer)
     TextView guessView;
 
-    @BindView(R.id.question_total_score)
-    TextView totalScoreTv;
+    @BindView(R.id.question_bar_share)
+    TextView shareView;
 
-    @BindView(R.id.question_clue)
+    @BindView(R.id.question_bar_clue)
     TextView clueView;
 
-    @BindView(R.id.question_menu)
+    @BindView(R.id.question_bar_menu)
     View menuView;
 
     @BindView(R.id.question_continue)
@@ -197,17 +197,6 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Ques
     }
 
     @Override
-    public void updateQuestionScore(int score) {
-
-    }
-
-
-    @Override
-    public void updateQuestionScore(int score, int change) {
-
-    }
-
-    @Override
     public void setGuess(String guess) {
 
         guessView.setText(guess);
@@ -262,10 +251,9 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Ques
     }
 
     @Override
-    public void showTotalScore(int score) {
+    public Observable<Void> shareClick() {
 
-        totalScoreTv.setText(String.format("%s", score));
-
+        return RxView.clicks(shareView);
     }
 
     @Override

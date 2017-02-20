@@ -13,10 +13,6 @@ public interface QuestionView extends BaseView {
 
     void setTeamHistory(List<TeamHistory> teamHistory);
 
-    void updateQuestionScore(int score);
-
-    void updateQuestionScore(int score, int change);
-
     void setGuess(String guess);
 
     void correctGuess(Key key);

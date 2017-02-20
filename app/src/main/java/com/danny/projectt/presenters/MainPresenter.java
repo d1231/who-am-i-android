@@ -54,7 +54,7 @@ public class MainPresenter extends BasePresenter<MainView> {
             clueService.addClues(DAILY_BONUS);
             clueService.setBonusTimeStamp(currentCalendar.getTime());
 
-            view.showOnDailyBonusReceived(DAILY_BONUS);
+            view.showOnDailyClueBonusReceived(DAILY_BONUS);
         }
     }
 

@@ -6,7 +6,7 @@ public interface QuestionBarView extends BaseView {
 
     void setClues(int integer);
 
-    void showTotalScore(int score);
+    Observable<Void> shareClick();
 
     Observable<Void> clueClick();
 

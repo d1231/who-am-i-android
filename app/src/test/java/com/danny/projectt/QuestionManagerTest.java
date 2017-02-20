@@ -14,7 +14,7 @@ public class QuestionManagerTest {
     @Test
     public void testEncodedString() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Robinho", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Robinho");
 
         assertThat(questionManager.text(), is("*******"));
 
@@ -23,7 +23,7 @@ public class QuestionManagerTest {
     @Test
     public void testEncodedStringWithSpaces() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Frank Lampard", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Frank Lampard");
 
         assertThat(questionManager.text(), is("***** *******"));
 
@@ -32,7 +32,7 @@ public class QuestionManagerTest {
     @Test
     public void testStringWithAccents() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Luiz Cané", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Luiz Cané");
 
         assertThat(questionManager.text(), is("**** ****"));
 
@@ -53,7 +53,7 @@ public class QuestionManagerTest {
     @Test
     public void testStringWithNonLetters() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Gary O'Niel", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Gary O'Niel");
 
         assertThat(questionManager.text(), is("**** *****"));
 
@@ -65,9 +65,9 @@ public class QuestionManagerTest {
     @Test
     public void testGuess() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Frank Lampard", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Frank Lampard");
 
-        assertThat(questionManager.guess('r'), is(QuestionManager.GuessResults.create(true, 20, 20, 1)));
+        assertThat(questionManager.guess('r'), is(QuestionManager.GuessResults.create(true)));
         assertThat(questionManager.text(), is("*R*** *****R*"));
 
     }
@@ -75,9 +75,9 @@ public class QuestionManagerTest {
     @Test
     public void testAddCharNotExisting() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Frank Lampard", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Frank Lampard");
 
-        assertThat(questionManager.guess('q'), is(QuestionManager.GuessResults.create(false, 0, 0, 0)));
+        assertThat(questionManager.guess('q'), is(QuestionManager.GuessResults.create(false)));
         assertThat(questionManager.text(), is("***** *******"));
 
     }
@@ -85,9 +85,9 @@ public class QuestionManagerTest {
     @Test
     public void testAddCharCapitalLetter() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Frank Lampard", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Frank Lampard");
 
-        assertThat(questionManager.guess('F'), is(QuestionManager.GuessResults.create(true, 10, 10, 1)));
+        assertThat(questionManager.guess('F'), is(QuestionManager.GuessResults.create(true)));
 
         assertThat(questionManager.text(), is("F**** *******"));
 
@@ -99,17 +99,17 @@ public class QuestionManagerTest {
         final TestSubscriber<String> testSubscriber = TestSubscriber.create();
         final TestSubscriber<String> testSubscriber1 = TestSubscriber.create();
 
-        QuestionManager questionManager = new QuestionManager("Frank Lampard", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Frank Lampard");
         final Observable<String> shared = questionManager.textObservable().share();
 
         shared.subscribe(testSubscriber);
         shared.last().subscribe(testSubscriber1);
 
 
-        assertThat(questionManager.guess('F'), is(QuestionManager.GuessResults.create(true, 10, 10, 1)));
-        assertThat(questionManager.guess('r'), is(QuestionManager.GuessResults.create(true, 22, 32, 2)));
-        assertThat(questionManager.guess('q'), is(QuestionManager.GuessResults.create(false, -5, 27, 0)));
-        assertThat(questionManager.guess('d'), is(QuestionManager.GuessResults.create(true, 10, 37, 1)));
+        assertThat(questionManager.guess('F'), is(QuestionManager.GuessResults.create(true)));
+        assertThat(questionManager.guess('r'), is(QuestionManager.GuessResults.create(true)));
+        assertThat(questionManager.guess('q'), is(QuestionManager.GuessResults.create(false)));
+        assertThat(questionManager.guess('d'), is(QuestionManager.GuessResults.create(true)));
 
         testSubscriber.assertValues("***** *******", "F**** *******", "FR*** *****R*", "FR*** *****RD");
         testSubscriber.assertNotCompleted();
@@ -131,7 +131,7 @@ public class QuestionManagerTest {
     @Test
     public void testRandomRevealing() throws Exception {
 
-        QuestionManager questionManager = new QuestionManager("Frank Lampard", 0, 0);
+        QuestionManager questionManager = new QuestionManager("Frank Lampard");
 
         final String beforeReveal = questionManager.text();
 

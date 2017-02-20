@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void showOnDailyBonusReceived(int dailyBonus) {
+    public void showOnDailyClueBonusReceived(int dailyBonus) {
 
         Toast.makeText(MainActivity.this, getString(R.string.toast_daily_bonus, dailyBonus), Toast.LENGTH_SHORT)
              .show();

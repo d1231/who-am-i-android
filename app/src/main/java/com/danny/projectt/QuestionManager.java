@@ -14,24 +14,13 @@ import rx.subjects.BehaviorSubject;
 
 public class QuestionManager {
 
-    private static final int POINTS_BAD_GUESS = -5;
-
-    private static final int POINTS_GOOD_GUESS = 10;
-
     private final StringBuilder sb;
 
     private final BehaviorSubject<String> currentGuessSubject;
 
     private final Map<Character, List<Integer>> letters = Maps.newHashMap();
 
-    private int questionScore;
-
-    private int correctSequence;
-
-    public QuestionManager(String name, int questionScore, int correctSequence) {
-
-        this.questionScore = questionScore;
-        this.correctSequence = correctSequence;
+    public QuestionManager(String name) {
 
         name = StringUtils.stripAccents(name);
         String displayName = name.toUpperCase();
@@ -70,11 +59,6 @@ public class QuestionManager {
                 k++;
             }
         }
-    }
-
-    public int getCorrectSequence() {
-
-        return correctSequence;
     }
 
     public Observable<String> textObservable() {
@@ -151,16 +135,13 @@ public class QuestionManager {
 
         if (lettersRevealed == 0) {
 
-            int guessScore = scoreBad();
-            return GuessResults.create(false, guessScore, questionScore, correctSequence);
+            return GuessResults.create(false);
 
         } else {
 
-            int guessScore = scoreGood(lettersRevealed);
-
             publishResults(c);
 
-            return GuessResults.create(true, guessScore, questionScore, correctSequence);
+            return GuessResults.create(true);
         }
 
 
@@ -171,55 +152,18 @@ public class QuestionManager {
         return letters.isEmpty();
     }
 
-    private int scoreBad() {
-
-        correctSequence = 0;
-
-        int beforeQuestionScore = questionScore;
-
-        questionScore = Math.max(questionScore + POINTS_BAD_GUESS, 0);
-
-        return questionScore - beforeQuestionScore;
-
-    }
-
-    private int scoreGood(int lettersRevealed) {
-
-        correctSequence += 1;
-
-        final int guessScore = (POINTS_GOOD_GUESS + (correctSequence - 1)) * lettersRevealed;
-
-        questionScore += guessScore;
-
-        return guessScore;
-    }
-
-    public int getQuestionScore() {
-
-        return questionScore;
-    }
-
     public static class GuessResults {
 
         final boolean correctGuess;
 
-        final int guessPoints;
-
-        final int totalPoints;
-
-        final int currentSequence;
-
-        private GuessResults(boolean correctGuess, int guessPoints, int totalPoints, int currentSequence) {
+        private GuessResults(boolean correctGuess) {
 
             this.correctGuess = correctGuess;
-            this.guessPoints = guessPoints;
-            this.totalPoints = totalPoints;
-            this.currentSequence = currentSequence;
         }
 
-        public static GuessResults create(boolean correctGuess, int guessPoints, int totalPoints, int currentSequence) {
+        public static GuessResults create(boolean correctGuess) {
 
-            return new GuessResults(correctGuess, guessPoints, totalPoints, currentSequence);
+            return new GuessResults(correctGuess);
         }
 
         public boolean isCorrectGuess() {
@@ -227,29 +171,10 @@ public class QuestionManager {
             return correctGuess;
         }
 
-        public int getGuessPoints() {
-
-            return guessPoints;
-        }
-
-        public int getTotalPoints() {
-
-            return totalPoints;
-        }
-
-        public int getCurrentSequence() {
-
-            return currentSequence;
-        }
-
         @Override
         public int hashCode() {
 
-            int result = (correctGuess ? 1 : 0);
-            result = 31 * result + guessPoints;
-            result = 31 * result + totalPoints;
-            result = 31 * result + currentSequence;
-            return result;
+            return (correctGuess ? 1 : 0);
         }
 
         @Override
@@ -260,10 +185,7 @@ public class QuestionManager {
 
             GuessResults that = (GuessResults) o;
 
-            if (correctGuess != that.correctGuess) return false;
-            if (guessPoints != that.guessPoints) return false;
-            if (totalPoints != that.totalPoints) return false;
-            return currentSequence == that.currentSequence;
+            return correctGuess == that.correctGuess;
 
         }
 
@@ -272,9 +194,6 @@ public class QuestionManager {
 
             return "GuessResults{" +
                     "correctGuess=" + correctGuess +
-                    ", guessPoints=" + guessPoints +
-                    ", totalPoints=" + totalPoints +
-                    ", currentSequence=" + currentSequence +
                     '}';
         }
     }

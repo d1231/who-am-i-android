@@ -2,11 +2,10 @@ package com.danny.projectt.presenters;
 
 import com.danny.projectt.GameController;
 import com.danny.projectt.Key;
+import com.danny.projectt.QuestionManager;
 import com.danny.projectt.R;
 import com.danny.projectt.fragments.DialogResult;
 import com.danny.projectt.model.ClueService;
-import com.danny.projectt.model.ScoreService;
-import com.danny.projectt.QuestionManager;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.utils.RxUtils;
 import com.danny.projectt.views.QuestionBarView;
@@ -17,10 +16,6 @@ import javax.inject.Inject;
 import rx.Subscription;
 
 public class QuestionPresenter extends BasePresenter<QuestionView> {
-
-    private static final int BASE_SCORE = 50;
-
-    private final ScoreService scoreService;
 
     private final GameController gameController;
 
@@ -37,15 +32,13 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
     private QuestionBarView questionBarView;
 
     @Inject
-    QuestionPresenter(GameController gameController, ScoreService scoreService, ClueService clueService, Player player) {
+    QuestionPresenter(GameController gameController, ClueService clueService, Player player) {
 
         this.gameController = gameController;
 
         this.clueService = clueService;
 
         this.player = player;
-
-        this.scoreService = scoreService;
 
     }
 
@@ -55,13 +48,10 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
         questionView = view;
         questionBarView = view.getQuestionBarView();
 
-        questionManager = new QuestionManager(player.name(), BASE_SCORE, scoreService.getCurrentSequence());
+        questionManager = new QuestionManager(player.name());
 
         final Subscription guessSubs = questionManager.textObservable()
                                                       .subscribe(view::setGuess, RxUtils::onError, this::guessFinish);
-
-        final Subscription totalScoreSub = scoreService.getTotalScoreObservable()
-                                                       .subscribe(questionBarView::showTotalScore, RxUtils::onError);
 
         final Subscription clubNumSub = clueService.getCluesObservable()
                                                    .subscribe(questionBarView::setClues, RxUtils::onError);
@@ -84,11 +74,17 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
         final Subscription menuSub = questionBarView.menuClick()
                                                     .subscribe(res -> goToMenu(), RxUtils::onError);
 
-        addSubscriptions(guessInputSubs, guessSubs, clueSubs, nextSub, skipSub, menuSub, totalScoreSub, clubNumSub);
+        final Subscription questionSub = questionBarView.shareClick()
+                                                    .subscribe(res -> goToShare(), RxUtils::onError);
 
-        view.updateQuestionScore(questionManager.getQuestionScore());
+        addSubscriptions(guessInputSubs, guessSubs, clueSubs, nextSub, skipSub, menuSub, clubNumSub, questionSub);
 
         view.setTeamHistory(player.teamHistory());
+    }
+
+    private void goToShare() {
+
+
     }
 
     private void skipQuestion() {
@@ -102,7 +98,6 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
                                                    .subscribe(dialogResult -> {
 
                                                        if (dialogResult == DialogResult.POSITIVE_CLICKED) {
-                                                           scoreService.setSequence(0);
                                                            gameController.skipQuestion();
                                                        }
 
@@ -154,9 +149,6 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
         gameController.finishQuestion();
 
-        scoreService.setSequence(questionManager.getCorrectSequence());
-
-        scoreService.addQuestionScore(questionManager.getQuestionScore());
     }
 
     private void guessLetter(Key key) {
@@ -170,9 +162,6 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
         }
 
-        final int guessScore = guessResults.getGuessPoints();
-        final int totalPoints = guessResults.getTotalPoints();
-        questionView.updateQuestionScore(totalPoints, guessScore);
     }
 
 }

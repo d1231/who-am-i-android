@@ -27,7 +27,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.dannyroa.espresso_samples.recyclerview.RecyclerViewMatcher.withRecyclerView;
+import static com.danny.projectt.Utils.RecyclerViewMatcher.withRecyclerView;
 
 @RunWith(AndroidJUnit4.class)
 public class QuestionFragmentTest {

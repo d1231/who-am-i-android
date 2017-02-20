@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.danny.projectt.dagger.scope.PerApp;
 import com.danny.projectt.model.ClueService;
-import com.danny.projectt.model.ScoreService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.utils.GsonConverter;
 import com.google.gson.Gson;
@@ -43,14 +42,6 @@ public class DataModule {
             throw new RuntimeException("Unable to create player queue");
         }
 
-
-    }
-
-    @PerApp
-    @Provides
-    public ScoreService provideScoreRepository(SharedPreferences sharedPreferences) {
-
-        return new ScoreService(sharedPreferences);
 
     }
 
