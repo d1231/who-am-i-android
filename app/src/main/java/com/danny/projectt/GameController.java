@@ -1,6 +1,6 @@
 package com.danny.projectt;
 
-import com.danny.projectt.model.PlayerService;
+import com.danny.projectt.services.PlayerService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.navigator.GameNavigator;
 import com.danny.projectt.utils.RxUtils;

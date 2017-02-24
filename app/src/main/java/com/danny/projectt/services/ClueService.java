@@ -1,4 +1,4 @@
-package com.danny.projectt.model;
+package com.danny.projectt.services;
 
 import android.content.SharedPreferences;
 

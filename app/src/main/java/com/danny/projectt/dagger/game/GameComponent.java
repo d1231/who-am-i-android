@@ -4,7 +4,7 @@ import com.danny.projectt.GameController;
 import com.danny.projectt.activities.GameActivity;
 import com.danny.projectt.dagger.application.ApplicationComponent;
 import com.danny.projectt.dagger.scope.PerGame;
-import com.danny.projectt.model.ClueService;
+import com.danny.projectt.services.ClueService;
 
 import dagger.Component;
 

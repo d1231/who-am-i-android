@@ -2,7 +2,7 @@ package com.danny.projectt.presenters;
 
 import com.danny.projectt.GameController;
 import com.danny.projectt.Key;
-import com.danny.projectt.model.ClueService;
+import com.danny.projectt.services.ClueService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.views.QuestionBarView;
 import com.danny.projectt.views.QuestionView;

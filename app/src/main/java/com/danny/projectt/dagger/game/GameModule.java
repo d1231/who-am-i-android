@@ -3,7 +3,7 @@ package com.danny.projectt.dagger.game;
 import com.danny.projectt.GameController;
 import com.danny.projectt.navigator.GameNavigator;
 import com.danny.projectt.dagger.scope.PerGame;
-import com.danny.projectt.model.PlayerService;
+import com.danny.projectt.services.PlayerService;
 
 import dagger.Module;
 import dagger.Provides;

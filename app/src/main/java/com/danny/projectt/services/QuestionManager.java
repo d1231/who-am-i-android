@@ -1,13 +1,16 @@
-package com.danny.projectt;
+package com.danny.projectt.services;
 
+import com.danny.projectt.utils.CommonStringUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -20,15 +23,14 @@ public class QuestionManager {
 
     private final Map<Character, List<Integer>> letters = Maps.newHashMap();
 
+    private String currentGuess;
+
     public QuestionManager(String name) {
 
-        name = StringUtils.stripAccents(name);
-        String displayName = name.toUpperCase();
-
-        final int length = displayName.length();
+        final int length = name.length();
         this.sb = new StringBuilder(length);
 
-        createLettersMap(displayName);
+        createLettersMap(name);
 
         this.currentGuessSubject = BehaviorSubject.create(sb.toString());
 
@@ -36,12 +38,22 @@ public class QuestionManager {
 
     private void createLettersMap(String displayName) {
 
+        createLettersMap(displayName, Sets.newHashSet());
+    }
+
+    private void createLettersMap(String displayName, Set<Character> revealedChars) {
+
         final int length = displayName.length();
 
         int k = 0;
         for (int i = 0; i < length; i++) {
             final char c = displayName.charAt(i);
-            if (Character.isLetter(c)) {
+
+            if (revealedChars.contains(c)) {
+
+                sb.append(revealedChars);
+
+            } else if (Character.isLetter(c)) {
                 sb.append('*');
 
                 List<Integer> indices = this.letters.get(c);
@@ -59,6 +71,20 @@ public class QuestionManager {
                 k++;
             }
         }
+    }
+
+    public QuestionManager(String name, String currentGuess) {
+
+        name = StringUtils.stripAccents(name);
+        String displayName = name.toUpperCase();
+
+        final int length = displayName.length();
+        this.sb = new StringBuilder(length);
+
+        createLettersMap(displayName, CommonStringUtils.getLettersSetFromString(currentGuess));
+
+        this.currentGuessSubject = BehaviorSubject.create(currentGuess);
+
     }
 
     public Observable<String> textObservable() {
@@ -150,6 +176,11 @@ public class QuestionManager {
     private boolean isFinishGuess() {
 
         return letters.isEmpty();
+    }
+
+    public String getCurrentGuess() {
+
+        return sb.toString();
     }
 
     public static class GuessResults {

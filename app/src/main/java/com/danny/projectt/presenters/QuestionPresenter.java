@@ -2,10 +2,10 @@ package com.danny.projectt.presenters;
 
 import com.danny.projectt.GameController;
 import com.danny.projectt.Key;
-import com.danny.projectt.QuestionManager;
+import com.danny.projectt.services.QuestionManager;
 import com.danny.projectt.R;
 import com.danny.projectt.fragments.DialogResult;
-import com.danny.projectt.model.ClueService;
+import com.danny.projectt.services.ClueService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.utils.RxUtils;
 import com.danny.projectt.views.QuestionBarView;
@@ -51,14 +51,14 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
         questionManager = new QuestionManager(player.name());
 
         final Subscription guessSubs = questionManager.textObservable()
-                                                      .subscribe(view::setGuess, RxUtils::onError, this::guessFinish);
+                                                      .subscribe(view::setGuess, RxUtils::onError, this::onQuestionFinish);
 
         final Subscription clubNumSub = clueService.getCluesObservable()
                                                    .subscribe(questionBarView::setClues, RxUtils::onError);
 
         final Subscription guessInputSubs = view.guesses()
                                                 .takeWhile(key -> !guessFinish)
-                                                .subscribe(this::guessLetter, RxUtils::onError);
+                                                .subscribe(this::onGuessedLetter, RxUtils::onError);
 
         final Subscription clueSubs = questionBarView.clueClick()
                                                      .takeWhile(res -> !guessFinish)
@@ -141,7 +141,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
     }
 
-    private void guessFinish() {
+    private void onQuestionFinish() {
 
         guessFinish = true;
 
@@ -151,7 +151,7 @@ public class QuestionPresenter extends BasePresenter<QuestionView> {
 
     }
 
-    private void guessLetter(Key key) {
+    private void onGuessedLetter(Key key) {
 
         final QuestionManager.GuessResults guessResults = questionManager.guess(key.getLetter());
 

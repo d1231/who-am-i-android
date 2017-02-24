@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.danny.projectt.dagger.scope.PerApp;
-import com.danny.projectt.model.ClueService;
+import com.danny.projectt.services.ClueService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.utils.GsonConverter;
 import com.google.gson.Gson;

@@ -1,6 +1,6 @@
 package com.danny.projectt;
 
-import com.danny.projectt.model.PlayerService;
+import com.danny.projectt.services.PlayerService;
 import com.danny.projectt.model.objects.Player;
 import com.danny.projectt.navigator.GameNavigator;
 
@@ -54,7 +54,7 @@ public class GameControllerTest {
 
         gameController.finishQuestion();
 
-        verify(playerService, times(1)).getPlayer();
+        verify(playerService, times(1)).markFinished();
     }
 
     @Test

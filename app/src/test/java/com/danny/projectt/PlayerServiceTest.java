@@ -1,7 +1,7 @@
 package com.danny.projectt;
 
-import com.danny.projectt.model.PlayerService;
-import com.danny.projectt.model.UserService;
+import com.danny.projectt.services.PlayerService;
+import com.danny.projectt.services.UserService;
 import com.danny.projectt.model.network.BackendService;
 import com.danny.projectt.model.objects.Player;
 import com.google.common.collect.Lists;

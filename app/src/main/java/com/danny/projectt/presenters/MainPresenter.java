@@ -1,6 +1,6 @@
 package com.danny.projectt.presenters;
 
-import com.danny.projectt.model.ClueService;
+import com.danny.projectt.services.ClueService;
 import com.danny.projectt.navigator.MenuNavigator;
 import com.danny.projectt.utils.DateUtils;
 import com.danny.projectt.utils.RxUtils;
