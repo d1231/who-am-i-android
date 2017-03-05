@@ -1,7 +1,7 @@
 package sharedTest;
 
-import com.danny.projectt.model.objects.Player;
-import com.danny.projectt.utils.AutoValueTypeAdapterFactory;
+import com.danny.whomi.model.objects.Player;
+import com.danny.whomi.utils.AutoValueTypeAdapterFactory;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
