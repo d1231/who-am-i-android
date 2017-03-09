@@ -1,5 +1,6 @@
-package com.danny.whomi;
+package com.danny.whomi.services;
 
+import com.danny.whomi.GameController;
 import com.danny.whomi.services.PlayerService;
 import com.danny.whomi.model.objects.Player;
 import com.danny.whomi.navigator.GameNavigator;

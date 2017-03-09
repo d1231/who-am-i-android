@@ -1,4 +1,4 @@
-package com.danny.whomi;
+package com.danny.whomi.services;
 
 import com.danny.whomi.services.NameService;
 import com.google.common.base.Objects;

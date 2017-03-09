@@ -1,14 +1,15 @@
 package com.danny.whomi.components;
 
-import com.danny.whomi.PlayerServiceTest;
-import com.danny.whomi.dagger.main.MainComponent;
-import com.danny.whomi.services.PlayerService;
+import com.danny.whomi.services.PlayerServiceTest;
 
 import dagger.Component;
+import sharedTest.TestModule;
+import sharedTest.TestScope;
 
 @Component(
         modules = TestModule.class
 )
+@TestScope
 public interface PlayerServiceComponent {
 
     void inject(PlayerServiceTest playerServiceTest);

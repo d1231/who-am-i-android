@@ -1,4 +1,4 @@
-package com.danny.whomi.components;
+package sharedTest;
 
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;

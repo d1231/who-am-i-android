@@ -1,7 +1,10 @@
-package com.danny.whomi;
+package com.danny.whomi.services;
 
+import com.danny.whomi.components.DaggerPlayerServiceComponent;
 import com.danny.whomi.components.PlayerServiceComponent;
-import com.danny.whomi.components.TestModule;
+
+import sharedTest.TestModule;
+
 import com.danny.whomi.services.PlayerService;
 import com.danny.whomi.model.network.BackendService;
 import com.danny.whomi.model.objects.Player;
@@ -19,7 +22,6 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.daggermock.DaggerMockRule;
-import it.cosenonjaviste.daggermock.InjectFromComponent;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
@@ -32,12 +34,12 @@ import static sharedTest.PlayerHelper.createPlayer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerServiceTest {
+//
+//    @Rule
+//    public final DaggerMockRule<PlayerServiceComponent> rule = new DaggerMockRule<>(PlayerServiceComponent.class, new TestModule())
+//            .set(component -> component.inject(PlayerServiceTest.this));
 
-    @Rule
-    public final DaggerMockRule<PlayerServiceComponent> rule = new DaggerMockRule<>(PlayerServiceComponent.class, new TestModule())
-            .set(component -> component.inject(PlayerServiceTest.this));
-
-    @Mock
+    @Inject
     BackendService backendService;
 
     @Inject
@@ -46,6 +48,7 @@ public class PlayerServiceTest {
     @Before
     public void setUp() throws Exception {
 
+        DaggerPlayerServiceComponent.builder().testModule(new TestModule()).build().inject(this);
 
     }
 
