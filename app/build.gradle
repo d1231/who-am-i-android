@@ -18,19 +18,18 @@ android {
     }
 
     compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
 
-        applicationId "com.danny.projectt"
+        applicationId "com.whomi"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 5
         versionName "0.1.0"
-
-        testInstrumentationRunner "com.danny.whomi.MockTestRunner"
-
         multiDexEnabled true
+        testInstrumentationRunner "com.whomi.MockTestRunner"
+
     }
 
     lintOptions {
@@ -47,12 +46,13 @@ android {
             signingConfig signingConfigs.config
             buildConfigField "boolean", "REPORT_CRASHES", "true"
             buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+            buildConfigField "String", "BACKEND_URL", $/"https://whomi.herokuapp.com/"/$
             buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
         }
 
         debug {
             buildConfigField "boolean", "REPORT_CRASHES", "true"
-            buildConfigField "String", "BACKEND_URL", $/"http://projectt-mydanny.rhcloud.com/"/$
+            buildConfigField "String", "BACKEND_URL", $/"https://whomi.herokuapp.com/"/$
             buildConfigField "String", "GIT_SHA", "\"DEBUG\""
             buildConfigField "String", "BUILD_TIME", "\"DEBUG\""
             applicationIdSuffix '.debug'
@@ -108,13 +108,14 @@ dependencies {
 
     // test deps
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'org.mockito:mockito-core:2.7.1'
     testCompile 'com.github.fabioCollini:DaggerMock:0.6.4'
     testApt 'com.google.dagger:dagger-compiler:2.5'
 
     // android test deps
     androidTestCompile 'junit:junit:4.12'
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile 'org.mockito:mockito-core:2.7.14'
+    androidTestCompile 'org.mockito:mockito-android:2.7.14'
     androidTestCompile 'com.android.support:support-annotations:25.2.0'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
@@ -125,9 +126,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude module: 'recyclerview-v7'
     }
-    androidTestCompile 'com.github.fabioCollini:DaggerMock:0.6.4'
+    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestApt 'com.google.dagger:dagger-compiler:2.5'
-
 
     //support
     compile 'com.android.support:support-annotations:25.2.0'
@@ -137,7 +137,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.2.0'
 
     //gson
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.8.0'
 
     //okhttp+retrofit
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
@@ -161,9 +161,9 @@ dependencies {
 
     //autovalue
     compile 'com.google.auto.value:auto-value:1.2'
-    apt 'com.ryanharter.auto.value:auto-value-gson:0.4.0'
-    provided 'com.ryanharter.auto.value:auto-value-gson:0.4.0'
-    apt 'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
+    apt 'com.ryanharter.auto.value:auto-value-gson:0.4.6'
+    provided 'com.ryanharter.auto.value:auto-value-gson:0.4.6'
+    apt 'com.ryanharter.auto.value:auto-value-parcel:0.2.5'
 
     //dagger
     apt 'com.google.dagger:dagger-compiler:2.5'
@@ -175,7 +175,7 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
-    compile 'com.google.guava:guava:20.0'
+    compile 'com.google.guava:guava:19.0'
     compile 'org.apache.commons:commons-lang3:3.4'
 
     compile 'com.squareup:tape:1.2.3'
@@ -185,9 +185,9 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
         transitive = true
     }
+    compile 'com.google.android.gms:play-services-analytics:10.2.0'
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
-
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 retrolambda {
@@ -195,3 +195,5 @@ retrolambda {
     oldJdk oldJdk_path
     javaVersion JavaVersion.VERSION_1_7
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -2,9 +2,11 @@ package sharedTest;
 
 import android.content.SharedPreferences;
 
-import com.danny.whomi.model.network.BackendService;
-import com.danny.whomi.model.objects.Player;
-import com.danny.whomi.services.ClueService;
+import com.whomi.model.network.BackendService;
+import com.whomi.model.objects.Player;
+import com.whomi.services.ClueService;
+import com.whomi.services.PlayerService;
+import com.whomi.services.WhomiAnalyticsService;
 import com.squareup.tape.InMemoryObjectQueue;
 import com.squareup.tape.ObjectQueue;
 
@@ -32,14 +34,18 @@ public class TestModule {
     }
 
     @Provides
+    public WhomiAnalyticsService provideWhomiAnalyticsService() {
+        return Mockito.mock(WhomiAnalyticsService.class);
+    }
+
+    @Provides
     @TestScope
     public BackendService backendService() {
         return Mockito.mock(BackendService.class);
     }
 
-    @Provides
-    @TestScope
-    public ClueService provideMockClueService() {
-        return Mockito.mock(ClueService.class);
+    public PlayerService providePlayerService() {
+        return Mockito.mock(PlayerService.class);
     }
+
 }

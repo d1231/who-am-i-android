@@ -30,5 +30,8 @@
     <string name="options_title">Options</string>
     <string name="options_start_game">Start game</string>
     <string name="question_bar_share">Share</string>
+    <string name="share_title">Whomi?</string>
+    <string name="whomi">Whomi</string>
+    <string name="select_nations">Select Nations</string>
 
 </resources>

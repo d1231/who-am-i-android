@@ -70,6 +70,10 @@
 -dontwarn javax.annotation.**
 -dontwarn autovalue.shaded.com.**
 -dontwarn com.google.auto.value.**
+-dontwarn com.google.auto.**
+-dontwarn autovalue.shaded.com.**
+-dontwarn sun.misc.Unsafe
+-dontwarn javax.lang.model.element.Modifier
 
 # autovalue gson extension
 -keep class **.AutoParcelGson_*
@@ -107,6 +111,14 @@
 -dontwarn com.google.j2objc.annotations.Weak
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
+-keep class com.google.j2objc.annotations.** { *; }
+-dontwarn   com.google.j2objc.annotations.**
+-keep class java.lang.ClassValue { *; }
+-dontwarn   java.lang.ClassValue
+-keep class org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement { *; }
+-dontwarn   org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+
 # Butterknifex.
 -keep class butterknife.** { *; }
 -keep class **$$ViewInjector { *; }
@@ -122,3 +134,10 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+-keep class com.whomi.** {*;}
+-dontwarn  com.whomi.**
+
+-keep class com.google.gson.reflect.TypeToken {*;}
+ -keep class **.AutoParcelGson_*
+ -keepnames @auto.parcelgson.AutoParcelGson class *

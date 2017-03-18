@@ -1,7 +1,7 @@
 package sharedTest;
 
-import com.danny.whomi.model.objects.Player;
-import com.danny.whomi.utils.AutoValueTypeAdapterFactory;
+import com.whomi.model.objects.Player;
+import com.whomi.utils.AutoValueTypeAdapterFactory;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +27,7 @@ public class PlayerHelper {
 
     public static Player createPlayer(String id, String name) {
 
-        return Player.create(id, name, "Goalkeeper", "Spain", "10.8.94", Lists.newArrayList());
+        return Player.create(id, name, "Goalkeeper", Lists.newArrayList());
     }
 
     public static Player createPlayer(long id) {
