@@ -6,9 +6,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="FullscreenTheme" parent="AppTheme">
+    <style name="MyAppTheme" parent="AppTheme">
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@null</item>
+        <item name="android:windowBackground">@drawable/background</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
     </style>
@@ -32,8 +32,6 @@
 
     <style name="teamhistory_header">
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:gravity">center</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
@@ -54,7 +52,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="ThemeButton" parent="FullscreenTheme">
+    <style name="ThemeButton">
         <item name="colorAccent">@android:color/white</item>
         <item name="colorButtonNormal">@android:color/white</item>
     </style>
@@ -76,20 +74,28 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="bar_item">
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
     <style name="buttonStyle">
         <item name="android:layout_gravity">center</item>
-        <item name="android:layout_marginEnd">@dimen/main_button_margin_sides</item>
-        <item name="android:layout_marginStart">@dimen/main_button_margin_sides</item>
+        <item name="android:paddingStart">40sp</item>
+        <item name="android:paddingEnd">40sp</item>
+        <item name="android:layout_marginStart">80sp</item>
+        <item name="android:layout_marginEnd">80sp</item>
         <item name="android:background">@drawable/button_main</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="questionScreenButton">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingStart">40sp</item>
+        <item name="android:paddingEnd">40sp</item>
+        <item name="android:layout_marginStart">80sp</item>
+        <item name="android:layout_marginEnd">80sp</item>
+        <item name="android:background">@drawable/button_main</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
     <style name="share_header">

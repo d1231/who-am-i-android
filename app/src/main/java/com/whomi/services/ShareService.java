@@ -76,7 +76,9 @@ public class ShareService {
         TeamHistoryAdapter teamHistoryAdapter = new TeamHistoryAdapter(context, player.teamHistory());
         recyclerView.setAdapter(teamHistoryAdapter);
 
-        final Bitmap bmp = Bitmap.createBitmap(1200, 1500, Bitmap.Config.ARGB_8888);
+        int calcHeight = player.teamHistory().size() * 150 + 300;
+
+        final Bitmap bmp = Bitmap.createBitmap(1200, calcHeight, Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bmp);
 
         view.setDrawingCacheEnabled(true);

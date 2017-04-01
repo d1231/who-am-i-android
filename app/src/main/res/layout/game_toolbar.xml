@@ -1,57 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/question_bar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#1A9FCC"
-        android:clickable="true">
+
+    <ImageButton
+        android:id="@+id/question_bar_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_menu"
+        android:text="@string/question_bar_menu"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
+
+
+    <LinearLayout
+        android:id="@+id/question_bar_clue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/question_bar_menu"
-            style="@style/bar_item"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackground"
-            android:text="@string/question_bar_menu"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#1C76CC"
-        android:clickable="true">
+            android:id="@+id/question_bar_clue_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/question_bar_clue"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/question_bar_clue"
-            style="@style/bar_item"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/question_bar_clue_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:background="?attr/selectableItemBackground"
-            android:text="@string/question_bar_clue"/>
+            android:gravity="center"
+            android:text="@string/question_bar_clue_left"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
 
-    </FrameLayout>
-
-    <TextView
+    <ImageButton
         android:id="@+id/question_bar_share"
-        style="@style/bar_item"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#1A9FCC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
         android:clickable="true"
-        android:text="@string/question_bar_share"/>
+        android:contentDescription="@string/content_description"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_share"
+        android:text="@string/question_bar_share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/question_bar_clue"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
 
     

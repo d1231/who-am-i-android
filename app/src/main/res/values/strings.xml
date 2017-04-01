@@ -3,7 +3,8 @@
     <string name="app_name">Who Am I? - Football edition</string>
 
     <string name="question_bar_menu">Menu</string>
-    <string name="question_bar_clue" formatted="false">Letter Reveal%n(%d left)</string>
+    <string name="question_bar_clue">Letter Reveal</string>
+    <string name="question_bar_clue_left" formatted="false">(%d Left)</string>
     <string name="question_continue">Continue</string>
     <string name="question_skip">Give up!</string>
     <string name="question_bar_points" formatted="false">My Points:%n%s</string>
@@ -33,5 +34,6 @@
     <string name="share_title">Whomi?</string>
     <string name="whomi">Whomi</string>
     <string name="select_nations">Select Nations</string>
+    <string name="content_description">Content Description</string>
 
 </resources>

@@ -7,4 +7,5 @@
     <color name="black_overlay">#66000000</color>
     <color name="colorCorrect">#00FF00</color>
     <color name="colorIncorrect">#FF0000</color>
+    <color name="team_background">#56ffffff</color>
 </resources>

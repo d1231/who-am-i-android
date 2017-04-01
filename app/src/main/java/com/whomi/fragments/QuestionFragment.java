@@ -53,10 +53,13 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Ques
     TextView guessView;
 
     @BindView(R.id.question_bar_share)
-    TextView shareView;
+    View shareView;
 
     @BindView(R.id.question_bar_clue)
-    TextView clueView;
+    View clueView;
+
+    @BindView(R.id.question_bar_clue_count)
+    TextView clueCount;
 
     @BindView(R.id.question_bar_menu)
     View menuView;
@@ -253,7 +256,7 @@ public class QuestionFragment extends BaseFragment implements QuestionView, Ques
     public void setClues(int clues) {
 
         getActivity().runOnUiThread(() -> {
-            clueView.setText(getString(R.string.question_bar_clue, clues));
+            clueCount.setText(getString(R.string.question_bar_clue_left, clues));
         });
 
     }

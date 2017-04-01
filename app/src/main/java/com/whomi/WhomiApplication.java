@@ -15,6 +15,7 @@ import com.whomi.BuildConfig;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class WhomiApplication extends Application {
 
@@ -47,6 +48,12 @@ public class WhomiApplication extends Application {
             Timber.plant(new Timber.DebugTree());
             refWatcher = LeakCanary.install(this);
         }
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 
         applicationComponent = createComponent();
 
